@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="/Users/daniar/PycharmProjects/pythonProject1/first_django_project/bookr/db.sqlite3" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="0"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="2475"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,10:mainauth_group"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="SQL 1">
+-- Create model Book
+--
+CREATE TABLE &quot;reviews_book&quot; (&quot;id&quot; integer NOT NULL PRIMARY KEY AUTOINCREMENT, &quot;title&quot; varchar(70) NOT NULL, &quot;publication_date&quot; date NOT NULL, &quot;isbn&quot; varchar(20) NOT NULL);
+--
+-- Create model Contributor
+--
+CREATE TABLE &quot;reviews_contributor&quot; (&quot;id&quot; integer NOT NULL PRIMARY KEY AUTOINCREMENT, &quot;first_names&quot; varchar(50) NOT NULL, &quot;last_names&quot; varchar(50) NOT NULL, &quot;email&quot; varchar(254) NOT NULL);
+--
+-- Create model Review
+--
+CREATE TABLE &quot;reviews_review&quot; (&quot;id&quot; integer NOT NULL PRIMARY KEY AUTOINCREMENT, &quot;content&quot; text NOT NULL, &quot;rating&quot; integer NOT NULL, &quot;date_created&quot; datetime NOT NULL, &quot;date_edited&quot; datetime NULL, &quot;book_id&quot; bigint NOT NULL REFERENCES &quot;reviews_book&quot; (&quot;id&quot;) DEFERRABLE INITIALLY DEFERRED, &quot;creator_id&quot; integer NOT NULL REFERENCES &quot;auth_user&quot; (&quot;id&quot;) DEFERRABLE INITIALLY DEFERRED);
+--
+-- Create model BookContributor
+--
+CREATE TABLE &quot;reviews_bookcontributor&quot; (&quot;id&quot; integer NOT NULL PRIMARY KEY AUTOINCREMENT, &quot;role&quot; varchar(20) NOT NULL, &quot;book_id&quot; bigint NOT NULL REFERENCES &quot;reviews_book&quot; (&quot;id&quot;) DEFERRABLE INITIALLY DEFERRED, &quot;contributor_id&quot; bigint NOT NULL REFERENCES &quot;reviews_contributor&quot; (&quot;id&quot;) DEFERRABLE INITIALLY DEFERRED);
+--
+-- Add field contributors to book
+--
+CREATE TABLE &quot;new__reviews_book&quot; (&quot;id&quot; integer NOT NULL PRIMARY KEY AUTOINCREMENT, &quot;title&quot; varchar(70) NOT NULL, &quot;publication_date&quot; date NOT NULL, &quot;isbn&quot; varchar(20) NOT NULL);
+INSERT INTO &quot;new__reviews_book&quot; (&quot;id&quot;, &quot;title&quot;, &quot;publication_date&quot;, &quot;isbn&quot;) SELECT &quot;id&quot;, &quot;title&quot;, &quot;publication_date&quot;, &quot;isbn&quot; FROM &quot;reviews_book&quot;;
+DROP TABLE &quot;reviews_book&quot;;
+ALTER TABLE &quot;new__reviews_book&quot; RENAME TO &quot;reviews_book&quot;;
+CREATE INDEX &quot;reviews_review_book_id_9a657eea&quot; ON &quot;reviews_review&quot; (&quot;book_id&quot;);
+CREATE INDEX &quot;reviews_review_creator_id_46914a15&quot; ON &quot;reviews_review&quot; (&quot;creator_id&quot;);
+CREATE INDEX &quot;reviews_bookcontributor_book_id_e7bfc5b2&quot; ON &quot;reviews_bookcontributor&quot; (&quot;book_id&quot;);
+CREATE INDEX &quot;reviews_bookcontributor_contributor_id_e3ee3341&quot; ON &quot;reviews_bookcontributor&quot; (&quot;contributor_id&quot;);
+--
+-- Add field publisher to book
+--
+CREATE TABLE &quot;new__reviews_book&quot; (&quot;id&quot; integer NOT NULL PRIMARY KEY AUTOINCREMENT, &quot;title&quot; varchar(70) NOT NULL, &quot;publication_date&quot; date NOT NULL, &quot;isbn&quot; varchar(20) NOT NULL, &quot;publisher_id&quot; bigint NOT NULL REFERENCES &quot;reviews_publisher&quot; (&quot;id&quot;) DEFERRABLE INITIALLY DEFERRED);
+INSERT INTO &quot;new__reviews_book&quot; (&quot;id&quot;, &quot;title&quot;, &quot;publication_date&quot;, &quot;isbn&quot;, &quot;publisher_id&quot;) SELECT &quot;id&quot;, &quot;title&quot;, &quot;publication_date&quot;, &quot;isbn&quot;, NULL FROM &quot;reviews_book&quot;;
+DROP TABLE &quot;reviews_book&quot;;
+ALTER TABLE &quot;new__reviews_book&quot; RENAME TO &quot;reviews_book&quot;;
+CREATE INDEX &quot;reviews_book_publisher_id_a3cbe35c&quot; ON &quot;reviews_book&quot; (&quot;publisher_id&quot;);
+
+</sql><current_tab id="0"/></tab_sql></sqlb_project>
