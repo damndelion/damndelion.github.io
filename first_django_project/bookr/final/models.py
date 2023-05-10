@@ -72,15 +72,15 @@ class Review(models.Model):
                              help_text="The Book that this review is for.")
 
 
-class Reservation(models.Model):
-    Username = models.CharField(help_text="Username", max_length = 40)
-    Name = models.CharField(help_text = "Username's name", max_length = 40)
-    Email = models.CharField(help_text = "Enmail-address", max_length = 50)
-    Phone_num = models.CharField(help_text="Phone number", max_length = 50)
-    Number= models.IntegerField(help_text = "Number of guests")
-    Date= models.DateField(help_text = "Date of reservation")
-    Time = models.CharField(help_text = "Time", max_length = 30)
-    Message = models.TextField(max_length = 200)
-
-    def __str__(self):
-        return self.Name
+# class Reservation(models.Model):
+#     Username = models.CharField(help_text="Username", max_length = 40)
+#     Name = models.CharField(help_text = "Username's name", max_length = 40)
+#     Email = models.CharField(help_text = "Enmail-address", max_length = 50)
+#     Phone_num = models.CharField(help_text="Phone number", max_length = 50)
+#     Number= models.IntegerField(help_text = "Number of guests")
+#     Date= models.DateField(help_text = "Date of reservation")
+#     Time = models.CharField(help_text = "Time", max_length = 30)
+#     Message = models.TextField(max_length = 200)
+#
+#     def __str__(self):
+#         return self.Name
