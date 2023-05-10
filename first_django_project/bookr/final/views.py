@@ -39,6 +39,14 @@ def reservation(request):
         Time = request.POST.get('time')
         Message = request.POST.get('message')
 
+        reservations = Reservation.objects.filter(Date=Date)
+        reservation_list = []
+        for reservation in reservations:
+            reservation_list.append({'reservation': reservation})
+
+        if len(reservation_list) > 10:
+            messages.error(request, "There are more than 10 reservations on this day. Please choose another day")
+            return redirect('profile')
         reservation = Reservation.objects.create(Username=Username, Name=Name, Email=Email, Phone_num=Phone_num,
                                           Date=Date, Number=Number, Time=Time, Message=Message)
         reservation.save()
