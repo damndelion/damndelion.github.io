@@ -19,7 +19,12 @@ def index(request):
 
 @login_required
 def profile(request):
-    return render(request, 'profile.html')
+    username = request.user.username
+    reservations = Reservation.objects.filter(Username=username)
+    reservation_list = []
+    for reservation in reservations :
+        reservation_list.append({'reservation': reservation})
+    return render(request, 'profile.html', {'reservation_list':reservation_list})
 
 
 @login_required

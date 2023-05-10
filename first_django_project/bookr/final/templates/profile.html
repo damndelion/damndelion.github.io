@@ -11,6 +11,14 @@
       Date Joined: {{ request.user.date_joined }} <br>
       Email: {{ request.user.email }}<br>
       Last Login: {{ request.user.last_login }}<br>
+    <h1>Reservations</h1>
+    <div>
+        {%for item in reservation_list%}
+        <p>Name: <span>{{item.reservation.Name}}</span></p>
+        <p>Date: <span>{{item.reservation.Date}}</span></p>
+        {%endfor%}
+    </div>
+
   </p>
 </div>
 {% endblock %}
