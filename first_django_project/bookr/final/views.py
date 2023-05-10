@@ -5,10 +5,10 @@ from django.http import HttpResponse
 from django.contrib import messages
 from .models import Book, Contributor, Publisher, Review
 from .utils import average_rating
-from .forms import PublisherForm, SearchForm, ReviewForm, BookMediaForm
+from .forms import PublisherForm, SearchForm, ReviewForm, BookMediaForm, NewUserForm
 from django.utils import timezone
 from django.conf import settings
-from PIL import Image
+
 from io import BytesIO
 from django.core.files.images import ImageFile
 import os
@@ -193,12 +193,28 @@ import os
 def index(request):
     return render(request, "home.html")
 
+
+@login_required
 def profile(request):
     return render(request, 'profile.html')
 
+
+@login_required
 def reservation(request):
     return render(request, 'reservation.html')
 
-def login(request):
-    return render(request, 'login.html')
 
+def login(request):
+    return render(request, 'registration/login.html')
+
+
+def register(request):
+    if request.method == "POST":
+        form = NewUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            messages.success(request, "Registration successful.")
+            return redirect("/accounts/profile/")
+        messages.error(request, "Unsuccessful registration. Invalid information.")
+    form = NewUserForm()
+    return render(request, 'registration/register.html', context={"form": form})

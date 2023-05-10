@@ -20,8 +20,17 @@
                 <h1>Klassy</h1>
                 <ul id="menu_bx">
                     <li><a href="/">Home</a></li>
-                    <li><a href="/accounts/login">Login</a></li>
                     <li><a href="/reservation/">Reservation</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="/accounts/logout">Logout</a></li>
+                    {% else %}
+                        <li><a href="/accounts/login">Login</a></li>
+                        <li><a href="/register">Sign up</a></li>
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                        <li><a href="/accounts/profile">User:{{ user.username }}</a><li/>
+                    {% endif %}
+
                 </ul>
                 <i class="bi bi-list"></i>
             </div>

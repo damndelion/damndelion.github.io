@@ -1,14 +1,16 @@
 {% extends "base.html" %}
-
-
+{% block title %}Bookr{% endblock %}
 {% block content %}
-
-
-
-  <div class="content" >
-    Profile
-
-  </div>
-
-
+<br>
+<br>
+<br>
+<h2>Profile</h2>
+<div>
+  <p>
+      Username: {{ request.user.username }} <br>
+      Date Joined: {{ request.user.date_joined }} <br>
+      Email: {{ request.user.email }}<br>
+      Last Login: {{ request.user.last_login }}<br>
+  </p>
+</div>
 {% endblock %}
