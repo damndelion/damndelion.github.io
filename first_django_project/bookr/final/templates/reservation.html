@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content%}
+<style>
+    .reservation{
+    display: flex;
+    justify-content: space-evenly;
+    background: url("img/reservation-bg.jpg");
+    margin-top: 65px;
+    padding-bottom: 5%;
+}
+.img{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+    margin-top: 5%;
+}
+.images{
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+.img_1{
+    border-radius: 5px;
+    width: 48%;
+    height: 95%;
+}
+.img_4{
+    border-radius: 5px;
+    width: 48%;
+    height: 95%;
+    align-self: flex-end;
+}
+.img_div1{
+    justify-content: start;
+    width: 100%;
+    height: 50%;
+}
+.img_div2{
+    justify-content: end;
+    width: 100%;
+    height: 50%;
+}
+.img_3{
+    border-radius: 5px;
+    margin-top: 2%;
+    margin-right: 4%;
+    align-self: flex-start;
+    height: 75%;
+    width: 42%;
+}
+.img_2{
+    border-radius: 5px;
+    margin-left: 4%;
+    margin-bottom: 2%;
+    align-self: flex-end;
+    height: 75%;
+    width: 42%;
+}
+.inp:hover{
+    border: 1px solid #fb5849;
+}
+.inp::placeholder {
+    color: black;
+    font-size: 14px;
+}
+.table{
+    margin-top: 5%;
+    padding: 5% 3% 3% 3%;
+    background-color: white;
+    border-radius: 5px;
+    width: 40%;
+    height: 80%;
+    text-align: center;
+}
+div div h4 {
+    font-weight: 700;
+    font-size: 30px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+div div div{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+div div input[type='submit']{
+    text-align: center;
+    color: white;
+    font-size: 13px;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 3px;
+    font-weight: 600;
+    background-color: #fb5849;
+    border: 1px solid #fb5849;
+    padding: 12px;
+}
+div div input[type = 'submit']:hover{
+    background-color: #e25346;
+}
+.inp{
+    background-color: #8080800f;
+    padding: 10px 20px ;
+    width: 42%;
+    margin: 10px;
+    border: 1px solid #ddd;
+    appearance: none;
+    border-radius: 5px;
+    outline: none;
+}
+div div textarea{
+    width: 88%;
+    height: 70px;
+    border: 1px solid #ddd;
+    margin: 10px;
+}
+</style>
+<div class="reservation">
+    <div class="img">
+    <div class="images">
+        <div class="img_div1">
+            <img class="img_1" src="img/tables.jpg" alt="tables1">
+            <img class="img_2" src="img/tables4.jpg" alt="tables4">
+        </div>
+        <div class="img_div2">
+            <img class="img_3" src="img/tables2.jpg" alt="tables2">
+            <img class="img_4" src="img/tables3.jpg" alt="tables3">
+        </div>
+    </div>
+    </div>
+    <div class="table">
+        <h4>Table Reservation</h4>
+        <form onsubmit="sign()">
+        <input class="inp" type="text" name = "name" id="name" placeholder="Your name">
+        <input class="inp" type="email" name = "email" id="email" placeholder="Your Email Address">
+        <input  class="inp" type="text" name = "phone" id="phone" placeholder="Phone Number">
+        <select class="inp" id="number" >
+            <option>Number Of Guests</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+            <option>11</option>
+            <option>12</option>
+        </select>
+             <input class="inp" type="date" name ="date" id="date" placeholder="dd/mm/yyyy">
+                <select class="inp" id="time" >
+                    <option>Time</option>
+                    <option>Breakfast</option>
+                    <option>Lunch</option>
+                    <option>Dinner</option>
+                </select>
+                <textarea placeholder="Message" id="message" name="w3review"></textarea>
+        <input type="submit" name = "submit" value="Make A Reservation">
+        </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
