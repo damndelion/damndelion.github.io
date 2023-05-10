@@ -25,7 +25,7 @@ def profile(request):
     reservation_list = []
     for reservation in reservations :
         reservation_list.append({'reservation': reservation})
-    return render(request, 'profile.html', {'reservation_list':reservation_list})
+    return render(request, 'profile.html',{'reservation_list':reservation_list})
 
 
 @login_required
@@ -38,6 +38,7 @@ def reservation(request):
         Date = request.POST.get('date')
         Number = request.POST.get('number')
         Time = request.POST.get('time')
+        Res_name = request.POST.get('res_name')
         Message = request.POST.get('message')
 
         reservations = Reservation.objects.filter(Date=Date)
@@ -57,7 +58,7 @@ def reservation(request):
             messages.error(request, "There are more than 8 reservations on this user")
             return redirect('profile')
         reservation = Reservation.objects.create(Username=Username, Name=Name, Email=Email, Phone_num=Phone_num,
-                                          Date=Date, Number=Number, Time=Time, Message=Message)
+                                          Date=Date, Number=Number, Time=Time,Res_name=Res_name, Message=Message)
         reservation.save()
     return render(request, 'reservation.html')
 

@@ -18,6 +18,7 @@ class Reservation(models.Model):
     Number= models.IntegerField(help_text = "Number of guests")
     Date= models.DateField(help_text = "Date of reservation")
     Time = models.CharField(help_text = "Time", max_length = 30)
+    Res_name = models.CharField(help_text="restaurant name", max_length = 40)
     Message = models.TextField(max_length = 200)
 
     def __str__(self):
