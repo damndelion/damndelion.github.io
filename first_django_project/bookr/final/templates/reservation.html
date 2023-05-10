@@ -133,11 +133,12 @@ div div textarea{
     </div>
     <div class="table">
         <h4>Table Reservation</h4>
-        <form onsubmit="sign()">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
         <input class="inp" type="text" name = "name" id="name" placeholder="Your name">
         <input class="inp" type="email" name = "email" id="email" placeholder="Your Email Address">
         <input  class="inp" type="text" name = "phone" id="phone" placeholder="Phone Number">
-        <select class="inp" id="number" >
+        <select class="inp" id="number" name = "number">
             <option>Number Of Guests</option>
             <option>1</option>
             <option>2</option>
@@ -153,13 +154,13 @@ div div textarea{
             <option>12</option>
         </select>
              <input class="inp" type="date" name ="date" id="date" placeholder="dd/mm/yyyy">
-                <select class="inp" id="time" >
+                <select class="inp" id="time"  name = time>
                     <option>Time</option>
                     <option>Breakfast</option>
                     <option>Lunch</option>
                     <option>Dinner</option>
                 </select>
-                <textarea placeholder="Message" id="message" name="w3review"></textarea>
+                <textarea placeholder="Message" id="message" name="message"></textarea>
         <input type="submit" name = "submit" value="Make A Reservation">
         </form>
         </div>

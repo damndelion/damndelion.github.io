@@ -27,7 +27,8 @@ urlpatterns = [
     path('accounts/profile/', final.views.profile, name='profile'),
     path('', final.views.index),
     path('reservation/', final.views.reservation),
-    path('register/', final.views.register, name="register")
+    path('register/', final.views.register, name="register"),
+    path('admin/', admin.site.urls),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
