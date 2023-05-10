@@ -24,6 +24,19 @@ def profile(request):
 
 @login_required
 def reservation(request):
+    if request.method == 'POST':
+        Username = request.POST.get('username')
+        Name = request.POST.get('name')
+        Email = request.POST.get('email')
+        Phone_num = request.POST.get('phone')
+        Date = request.POST.get('date')
+        Number = request.POST.get('number')
+        Time = request.POST.get('time')
+        Message = request.POST.get('message')
+
+        reservation = Reservation.objects.create(Username=Username, Name=Name, Email=Email, Phone_num=Phone_num,
+                                          Date=Date, Comments=Comments, Price=Price, Pre_price=Pre_price)
+        product.save()
     return render(request, 'reservation.html')
 
 
