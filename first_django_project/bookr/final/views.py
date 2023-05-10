@@ -3,7 +3,7 @@ from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.contrib import messages
-from .models import Book, Contributor, Publisher, Review,Reservation
+from .models import Book, Contributor, Publisher, Review
 from .utils import average_rating
 from .forms import PublisherForm, SearchForm, ReviewForm, BookMediaForm, NewUserForm
 from django.utils import timezone
@@ -19,12 +19,12 @@ def index(request):
 
 @login_required
 def profile(request):
-    username = request.user.username
-    reservations = Reservation.objects.filter(Username=username)
-    reservation_list = []
-    for reservation in reservations :
-        reservation_list.append({'reservation': reservation})
-    return render(request, 'profile.html', {'reservation_list':reservation_list})
+    # username = request.user.username
+    # reservations = Reservation.objects.filter(Username=username)
+    # reservation_list = []
+    # for reservation in reservations :
+    #     reservation_list.append({'reservation': reservation})
+    return render(request, 'profile.html')
 
 
 @login_required
@@ -39,25 +39,25 @@ def reservation(request):
         Time = request.POST.get('time')
         Message = request.POST.get('message')
 
-        reservations = Reservation.objects.filter(Date=Date)
-        reservation_list = []
-        for reservation in reservations:
-            reservation_list.append({'reservation': reservation})
-
-        reservationss = Reservation.objects.filter(Username = Username)
-        reservation_list2 = []
-        for reservation in reservationss:
-            reservation_list2.append({'reservation': reservation})
-        if len(reservation_list) > 10:
-            messages.error(request, "There are more than 10 reservations on this day. Please choose another day")
-            return redirect('profile')
-
-        if len(reservation_list2) > 8:
-            messages.error(request, "There are more than 8 reservations on this user")
-            return redirect('profile')
-        reservation = Reservation.objects.create(Username=Username, Name=Name, Email=Email, Phone_num=Phone_num,
-                                          Date=Date, Number=Number, Time=Time, Message=Message)
-        reservation.save()
+        # reservations = Reservation.objects.filter(Date=Date)
+        # reservation_list = []
+        # for reservation in reservations:
+        #     reservation_list.append({'reservation': reservation})
+        #
+        # reservationss = Reservation.objects.filter(Username = Username)
+        # reservation_list2 = []
+        # for reservation in reservationss:
+        #     reservation_list2.append({'reservation': reservation})
+        # if len(reservation_list) > 10:
+        #     messages.error(request, "There are more than 10 reservations on this day. Please choose another day")
+        #     return redirect('profile')
+        #
+        # if len(reservation_list2) > 8:
+        #     messages.error(request, "There are more than 8 reservations on this user")
+        #     return redirect('profile')
+        # reservation = Reservation.objects.create(Username=Username, Name=Name, Email=Email, Phone_num=Phone_num,
+        #                                   Date=Date, Number=Number, Time=Time, Message=Message)
+        # reservation.save()
     return render(request, 'reservation.html')
 
 
