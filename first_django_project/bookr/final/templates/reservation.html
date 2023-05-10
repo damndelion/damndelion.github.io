@@ -135,10 +135,10 @@ div div textarea{
         <h4>Table Reservation</h4>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-        <input class="inp" type="text" name = "name" id="name" placeholder="Your name">
-        <input class="inp" type="email" name = "email" id="email" placeholder="Your Email Address">
-        <input  class="inp" type="text" name = "phone" id="phone" placeholder="Phone Number">
-        <select class="inp" id="number" name = "number">
+        <input required class="inp" type="text" name = "name" id="name" placeholder="Your name">
+        <input required class="inp" type="email" name = "email" id="email" placeholder="Your Email Address">
+        <input required class="inp" type="text" name = "phone" id="phone" placeholder="Phone Number">
+        <select required class="inp" id="number" name = "number">
             <option>Number Of Guests</option>
             <option>1</option>
             <option>2</option>
@@ -153,14 +153,17 @@ div div textarea{
             <option>11</option>
             <option>12</option>
         </select>
-             <input class="inp" type="date" name ="date" id="date" placeholder="dd/mm/yyyy">
-                <select class="inp" id="time"  name = time>
+             <input required class="inp" type="date" name ="date" id="date" placeholder="dd/mm/yyyy">
+                <select  required class="inp" id="time"  name = time>
                     <option>Time</option>
                     <option>Breakfast</option>
                     <option>Lunch</option>
                     <option>Dinner</option>
                 </select>
-                <textarea placeholder="Message" id="message" name="message"></textarea>
+                <textarea required placeholder="Message" id="message" name="message"></textarea>
+            {%for message in messages%}
+            {{message}}
+            {%endfor%}
         <input type="submit" name = "submit" value="Make A Reservation">
         </form>
         </div>
