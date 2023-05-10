@@ -3,7 +3,7 @@ from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.contrib import messages
-from .models import Book, Contributor, Publisher, Review
+from .models import Book, Contributor, Publisher, Review,Reservation
 from .utils import average_rating
 from .forms import PublisherForm, SearchForm, ReviewForm, BookMediaForm, NewUserForm
 from django.utils import timezone
