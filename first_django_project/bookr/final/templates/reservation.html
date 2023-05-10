@@ -5,7 +5,7 @@
     .reservation{
     display: flex;
     justify-content: space-evenly;
-    background: url("img/reservation-bg.jpg");
+    background: url('/static/images/reservation-bg.jpg');
     margin-top: 65px;
     padding-bottom: 5%;
 }
@@ -122,12 +122,12 @@ div div textarea{
     <div class="img">
     <div class="images">
         <div class="img_div1">
-            <img class="img_1" src="img/tables.jpg" alt="tables1">
-            <img class="img_2" src="img/tables4.jpg" alt="tables4">
+            <img class="img_1" src="{% static 'images/tables.jpg' %}" alt="tables1">
+            <img class="img_2" src="{% static 'images/tables2.jpg' %}" alt="tables4">
         </div>
         <div class="img_div2">
-            <img class="img_3" src="img/tables2.jpg" alt="tables2">
-            <img class="img_4" src="img/tables3.jpg" alt="tables3">
+            <img class="img_3" src="{% static 'images/tables3.jpg' %}" alt="tables2">
+            <img class="img_4" src="{% static 'images/tables4.jpg' %}" alt="tables3">
         </div>
     </div>
     </div>

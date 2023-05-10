@@ -1,0 +1,13 @@
+.kettik{
+    display: flex;
+}
+.kettik_left{
+    width: 15%;
+}
+.kettik_right{
+    width: 85%;
+}
+.olivier img{
+    height: 550px;
+    width: 100%;
+}
