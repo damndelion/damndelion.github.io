@@ -3,9 +3,10 @@ from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.contrib import messages
-from .models import Book, Contributor, Publisher, Review,Reservation
+from PIL import Image
+from .models import Restaurant, Reservation
 from .utils import average_rating
-from .forms import PublisherForm, SearchForm, ReviewForm, BookMediaForm, NewUserForm
+from .forms import NewUserForm
 from django.utils import timezone
 from django.conf import settings
 
@@ -75,3 +76,42 @@ def register(request):
         messages.error(request, "Unsuccessful registration. Invalid information.")
     form = NewUserForm()
     return render(request, 'registration/register.html', context={"form": form})
+
+
+def restaurant_detail(request, id):
+    restaurant = get_object_or_404(Restaurant, id=id)
+    title = restaurant.title
+    description = restaurant.description
+
+    img1 = restaurant.img1
+    img2 = restaurant.img2
+    img3 = restaurant.img3
+    return render(request, "restaurant_detail.html", {"title": title, "description": description,
+                                                      "img1": img1, "img2": img2, "img3": img3})
+
+
+# def book_media(request, pk):
+#     book = get_object_or_404(Book, pk=pk)
+#     if request.method == "POST":
+#         form = BookMediaForm(request.POST, files=request.FILES, instance=book)
+#         if form.is_valid():
+#             book = form.save(False)
+#             cover = form.cleaned_data.get("cover")
+#             if cover:
+#                 image = Image.open(cover)
+#                 image.thumbnail((300, 300))
+#                 image_data = BytesIO()
+#                 image.save(fp=image_data, format=cover.image.format)
+#                 image_file = ImageFile(image_data)
+#                 book.cover.save(cover.name, image_file)
+#             book.save()
+#
+#             messages.success(request, "Book \"{}\" was successfully updated.".format(book))
+#             return redirect("book_detail", book.pk)
+#     else:
+#         form = BookMediaForm(instance=book)
+#
+#     return render(request, "reviews/instance-form.html",
+#                   {"instance": book, "form": form, "model_type": "Book", "is_file_upload": True})
+
+
