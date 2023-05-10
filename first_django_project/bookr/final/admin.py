@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Publisher, Contributor, Book, BookContributor, Review
+from .models import Publisher, Contributor, Book, BookContributor, Review, Reservation
 
 
 
@@ -8,8 +8,8 @@ class ContributorAdmin(admin.ModelAdmin):
     search_fields = ('last_names__startswith', 'first_names')
     list_filter = ('last_names',)
 
-# class ReservationAdmin(admin.ModelAdmin):
-#     list_display = ('Name', 'Date')
+class ReservationAdmin(admin.ModelAdmin):
+    list_display = ('Name', 'Date')
 
 
 class BookAdmin(admin.ModelAdmin):
@@ -27,7 +27,7 @@ class BookAdmin(admin.ModelAdmin):
 
 # Register your models here.
 admin.site.register(Publisher)
-# admin.site.register(Reservation, ReservationAdmin)
+admin.site.register(Reservation, ReservationAdmin)
 admin.site.register(Contributor, ContributorAdmin)
 admin.site.register(Book, BookAdmin)
 admin.site.register(BookContributor)
