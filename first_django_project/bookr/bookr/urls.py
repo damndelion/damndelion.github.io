@@ -24,7 +24,6 @@ import final.views
 # ]
 urlpatterns = [
     path('accounts/', include(('django.contrib.auth.urls', 'auth'), namespace='accounts')),
-    path('logout/',final.views.logout, name='logout'),
     path('accounts/profile/', final.views.profile, name='profile'),
     path('', final.views.index),
     path('reservation/', final.views.reservation),
