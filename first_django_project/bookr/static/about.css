@@ -120,7 +120,7 @@ header .content .content-left .content-left-inner .btn-res a:hover{
     height: 700px;
     /* border: 1px solid; */
     display: flex;
-    animation: slide 12s infinite;
+    animation: slide 16s infinite;
 }
 .content .wrapper img{
     width: 100%;
