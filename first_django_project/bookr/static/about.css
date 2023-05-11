@@ -62,7 +62,7 @@ header .content{
     margin-top:67px ;
 }
 header .content .content-left{
-    background-image: url(pictures/top-left-bg.jpg);
+    background-image: url('/static/images/top-left-bg.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -120,7 +120,7 @@ header .content .content-left .content-left-inner .btn-res a:hover{
     height: 700px;
     /* border: 1px solid; */
     display: flex;
-    animation: slide 16s infinite;
+    animation: slide 12s infinite;
 }
 .content .wrapper img{
     width: 100%;

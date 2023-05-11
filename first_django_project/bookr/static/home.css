@@ -11,6 +11,7 @@
 }
 .kettik_left{
     width: 15%;
+    background-image: url("/static/images/top-left-bg.jpg");
 }
 .kettik_right{
     width: 85%;
