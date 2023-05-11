@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 {% load i18n static %}
+{% load static %}
 
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'login.css' %}">
 <br>
 <br>
 <br>
@@ -19,6 +21,8 @@
 </p>
 {% endfor %}
 {% endif %}
+<link rel="stylesheet" href="{% static ' login.css' %}">
+
 
 <div id="content-main">
 
@@ -35,9 +39,16 @@
   </div>
 
   <div class="submit-row">
-    <input type="submit" value="{% translate 'Log in' %}">
+    <input type="submit" class="btn" value="{% translate 'Log in' %}">
   </div>
 </form>
 
 </div>
+
+<br>
+<br>
+<br><br>
+<br>
+<br><br>
+<br>
 {% endblock %}
