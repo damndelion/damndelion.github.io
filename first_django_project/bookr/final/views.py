@@ -90,7 +90,7 @@ def restaurant_detail(request, id):
     img2 = restaurant.img2
     img3 = restaurant.img3
     menu = Menu.objects.filter(restaurant_id=id)
-    print(menu)
+
 
     return render(request, "restaurant_detail.html", {"title": title, "description": description,
                                                       "logo": logo, "img1": img1, "img2": img2, "img3": img3,
