@@ -62,7 +62,7 @@ header .content{
     margin-top:67px ;
 }
 header .content .content-left{
-    background-image: url(pictures/top-left-bg.jpg);
+    background-image: url('/static/images/top-left-bg.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
