@@ -1,9 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 {% load static %}
-    <br>
-    <br>
-    <br>
+
     <style>
 
         .content-left{
@@ -45,17 +43,32 @@
 
             </div>
         </div>
-<!--    <p>Restaurant {{ title }}</p>-->
-<!--    <p>Desctription {{ description }}</p>-->
-<!--    <img src="{{ logo.url }}" alt="img1">-->
-<!--    <img src="{{ img1.url }}" alt="img1">-->
-<!--    <img src="{{ img2.url }}" alt="img1">-->
-<!--    <img src="{{ img3.url }}" alt="img1">-->
-<!--    <br>-->
+<div class="menus">
+        <div class="chast_top">
+            <ul class="chast">
+                {% for menu in menus %}
+                <div class="insite">
+                    <img src="{{ menu.img.url }}" alt="img">
 
-    {% for menu in menus %}
-            <p>{{ menu.name }}</p>
-            <p>{{ menu.price }}</p>
-            <img src="{{ menu.img.url }}" alt="img">
-          {% endfor %}
+                    <div class="discr">
+                        <h3>{{ menu.name }}</h3>
+                        <div class="rate">
+                            <i class="bi bi-star-fill"></i>
+                            {{ menu.price }}
+                            <span>$</span>
+                            <span style="color: rgb(106, 106, 106);">$</span>
+                            <span style="color: rgb(162, 162, 162);">$</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+<!--    {% for menu in menus %}-->
+<!--            <p>{{ menu.name }}</p>-->
+<!--            <p>{{ menu.price }}</p>-->
+<!--            <img src="{{ menu.img.url }}" alt="img">-->
+<!--          {% endfor %}-->
 {% endblock %}
