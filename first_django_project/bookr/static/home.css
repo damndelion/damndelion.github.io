@@ -1,6 +1,14 @@
 .kettik{
     display: flex;
 }
+.olivier{
+    border-bottom: 1px solid;
+}
+.name{
+    text-align: center;
+    font-size: 60px;
+    color:rgb(218, 20, 20) ;
+}
 .kettik_left{
     width: 15%;
 }
