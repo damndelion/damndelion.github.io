@@ -1,24 +1,49 @@
 {% extends "base.html" %}
-{% block title %}Bookr{% endblock %}
+{% load static %}
+
+
+
+{% block title %}profile{% endblock %}
 {% block content %}
+
+
+<link rel="stylesheet" href="{% static 'profile.css' %}">
+
 <br>
 <br>
 <br>
-<h2>Profile</h2>
-<div >
-  <p>
-      Username: {{ request.user.username }} <br>
-      Date Joined: {{ request.user.date_joined }} <br>
-      Email: {{ request.user.email }}<br>
-      Last Login: {{ request.user.last_login }}<br>
-    <h1>Reservations</h1>
-    <div>
+<link rel="stylesheet" href="{% static 'profile.css' %}">
+<h2 class="h-2">My Profile:</h2>
+<div class="allnews">
+    <img src="{% static 'images/profile.png' %}" alt="" class="img">
+
+  <div class="container">
+      <h4 class="title">Username: <span>{{ request.user.username }}</span> </h4>
+      <h4 class="title">Date Joined: <span>{{ request.user.date_joined }} </span></h4>
+      <h4 class="title">Email: <span>{{ request.user.email }}</span></h4>
+      <h4 class="title">Last Login: <span>{{ request.user.last_login }}</span></h4>
+  </div>
+    <h1 class="h-2">Reservations</h1>
+    <div class="container-2">
         {%for item in reservation_list%}
         <p>Name: <span>{{item.reservation.Name}}</span></p>
         <p>Date: <span>{{item.reservation.Date}}</span></p>
         <p>Date: <span>{{item.reservation.Res_name}}</span></p>
         {%endfor%}
     </div>
-  </p>
-</div>
+
+  </div>
+
+
+<br>
+<br>
+<br><br>
+<br>
+<br><br>
+
+
+
+
+
+
 {% endblock %}
