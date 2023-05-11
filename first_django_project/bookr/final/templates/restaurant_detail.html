@@ -3,15 +3,29 @@
 {% load static %}
 
     <style>
+
         .content-left{
             background-color: #fb5849;
+        }
+
+        .logo{
+            position: absolute;
+            margin-left: 7%;
+
+            width: 20%;
+        }
+        .content-left-inner{
+            padding-top:10%;
+        }
+        .list-img{
+            height: 100%;
         }
     </style>
 
 
-
         <div class="content">
             <div class="content-left">
+                <img  class="logo" src="{{ logo.url }}" alt="img1">
                 <div class="content-left-inner">
                     <h4>{{ title }}</h4>
                     <div class="btn-res">
@@ -21,10 +35,10 @@
             </div>
             <div class="container">
                 <div class="wrapper">
-                    <img src="{{ logo.url }}" alt="img1">
-                    <img src="{{ img1.url }}" alt="img1">
-                    <img src="{{ img2.url }}" alt="img1">
-                    <img src="{{ img3.url }}" alt="img1">
+                    <img class="list-img" src="{{ img1.url }}" alt="img1">
+                    <img class="list-img" src="{{ img2.url }}" alt="img1">
+                    <img class="list-img" src="{{ img3.url }}" alt="img1">
+                    <img class="list-img" src="{{ img2.url }}" alt="img1">
                 </div>
 
             </div>
@@ -32,7 +46,7 @@
 <div class="menus">
         <div class="chast_top">
             <ul class="chast">
-                {% for menu in menus %}
+                 {% for menu in menus %}
                 <div class="insite">
                     <img src="{{ menu.img.url }}" alt="img">
 
@@ -52,9 +66,5 @@
         </div>
     </div>
 
-<!--    {% for menu in menus %}-->
-<!--            <p>{{ menu.name }}</p>-->
-<!--            <p>{{ menu.price }}</p>-->
-<!--            <img src="{{ menu.img.url }}" alt="img">-->
-<!--          {% endfor %}-->
+
 {% endblock %}
