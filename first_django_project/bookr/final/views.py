@@ -83,7 +83,6 @@ def restaurant_detail(request, id):
     restaurant = get_object_or_404(Restaurant, id=id)
     title = restaurant.title
     description = restaurant.description
-
     img1 = restaurant.img1
     img2 = restaurant.img2
     img3 = restaurant.img3
