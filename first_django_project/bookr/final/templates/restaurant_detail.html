@@ -3,13 +3,31 @@
     <br>
     <br>
     <br>
-    <p>Restaurant {{ title }}</p>
-    <p>Desctription {{ description }}</p>
-    <img src="{{ logo.url }}" alt="img1">
-    <img src="{{ img1.url }}" alt="img1">
-    <img src="{{ img2.url }}" alt="img1">
-    <img src="{{ img3.url }}" alt="img1">
-    <br>
+        <div class="content">
+            <div class="content-left">
+                <div class="content-left-inner">
+                    <h4>{{ title }}</h4>
+                    <div class="btn-res">
+                        <a href="/reservation/">Make A Reservation</a>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="wrapper">
+                    <img src="{{ logo.url }}" alt="img1">
+                    <img src="{{ img1.url }}" alt="img1">
+                    <img src="{{ img2.url }}" alt="img1">
+                    <img src="{{ img3.url }}" alt="img1">
+                </div>
+            </div>
+        </div>
+<!--    <p>Restaurant {{ title }}</p>-->
+<!--    <p>Desctription {{ description }}</p>-->
+<!--    <img src="{{ logo.url }}" alt="img1">-->
+<!--    <img src="{{ img1.url }}" alt="img1">-->
+<!--    <img src="{{ img2.url }}" alt="img1">-->
+<!--    <img src="{{ img3.url }}" alt="img1">-->
+<!--    <br>-->
 
     {% for menu in menus %}
             <p>{{ menu.name }}</p>
