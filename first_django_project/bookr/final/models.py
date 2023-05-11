@@ -28,6 +28,7 @@ class Restaurant(models.Model):
     img3 = models.ImageField(upload_to="restaurant_img/")
 
 
+
 class Menu(models.Model):
     name = models.CharField(max_length=70, help_text="Name of the item")
     price = models.IntegerField(help_text="Price of item")
