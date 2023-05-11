@@ -5,7 +5,7 @@
     .reservation{
     display: flex;
     justify-content: space-evenly;
-    background: url("img/reservation-bg.jpg");
+    background: url('/static/images/reservation-bg.jpg');
     margin-top: 65px;
     padding-bottom: 5%;
 }
@@ -101,9 +101,29 @@ div div input[type='submit']{
 div div input[type = 'submit']:hover{
     background-color: #e25346;
 }
+.inppp{
+background-color: #8080800f;
+    padding: 10px 10px ;
+    width: 21%;
+    margin: 10px;
+    border: 1px solid #ddd;
+    appearance: none;
+    border-radius: 5px;
+    outline: none;
+}
+.res_name{
+background-color: #8080800f;
+    padding: 10px 10px ;
+    width: 45%;
+    margin: 10px;
+    border: 1px solid #ddd;
+    appearance: none;
+    border-radius: 5px;
+    outline: none;
+}
 .inp{
     background-color: #8080800f;
-    padding: 10px 20px ;
+    padding: 10px 10px ;
     width: 42%;
     margin: 10px;
     border: 1px solid #ddd;
@@ -122,12 +142,12 @@ div div textarea{
     <div class="img">
     <div class="images">
         <div class="img_div1">
-            <img class="img_1" src="img/tables.jpg" alt="tables1">
-            <img class="img_2" src="img/tables4.jpg" alt="tables4">
+            <img class="img_1" src="{% static 'images/tables.jpg' %}" alt="tables1">
+            <img class="img_2" src="{% static 'images/tables2.jpg' %}" alt="tables4">
         </div>
         <div class="img_div2">
-            <img class="img_3" src="img/tables2.jpg" alt="tables2">
-            <img class="img_4" src="img/tables3.jpg" alt="tables3">
+            <img class="img_3" src="{% static 'images/tables3.jpg' %}" alt="tables2">
+            <img class="img_4" src="{% static 'images/tables4.jpg' %}" alt="tables3">
         </div>
     </div>
     </div>
@@ -138,8 +158,9 @@ div div textarea{
         <input required class="inp" type="text" name = "name" id="name" placeholder="Your name">
         <input required class="inp" type="email" name = "email" id="email" placeholder="Your Email Address">
         <input required class="inp" type="text" name = "phone" id="phone" placeholder="Phone Number">
-        <select required class="inp" id="number" name = "number">
-            <option>Number Of Guests</option>
+            <input required class="inp" type="date" name ="date" id="date" placeholder="dd/mm/yyyy">
+            <label for="number" style="">Number Of Guests: </label>
+        <select required class="inppp" id="number" name = "number">
             <option>1</option>
             <option>2</option>
             <option>3</option>
@@ -153,13 +174,19 @@ div div textarea{
             <option>11</option>
             <option>12</option>
         </select>
-             <input required class="inp" type="date" name ="date" id="date" placeholder="dd/mm/yyyy">
                 <select  required class="inp" id="time"  name = time>
                     <option>Time</option>
                     <option>Breakfast</option>
                     <option>Lunch</option>
                     <option>Dinner</option>
                 </select>
+            <label for="res_name" style="">Restaurants: </label>
+            <select required class="res_name"  id = "res_name" name = "res_name">
+                <option>OLIVIER ALMATY</option>
+                <option>PARMIGIANO RISTORANTE</option>
+                <option>CRUDO ABAYA</option>
+                <option>SUNSET ART & KITCHEN</option>
+            </select>
                 <textarea required placeholder="Message" id="message" name="message"></textarea>
             {%for message in messages%}
             {{message}}

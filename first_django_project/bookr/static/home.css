@@ -1,0 +1,68 @@
+.kettik{
+    display: flex;
+}
+.olivier{
+    border-bottom: 1px solid;
+}
+.name{
+    text-align: center;
+    font-size: 60px;
+    color:rgb(218, 20, 20) ;
+}
+.kettik_left{
+    width: 15%;
+}
+.kettik_right{
+    width: 85%;
+}
+.olivier img{
+    margin-left: 10px;
+    height: 550px;
+    width: 1250px;
+}
+.info{
+    margin: 30px;
+    display: flex;
+    justify-content: space-around;
+}
+.good{
+    display: flex;
+}
+.reservationn{
+    width: 100px;
+    height: 100px;
+}
+.good img{
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+}
+.good a{
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+}
+.sociall{
+    margin-right: 10px;
+    width: 50px;
+}
+.good a i{
+    font-size: 30px;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+}
+.good a:after{
+    background-color: #fcb900;
+}
+.info2{
+    display: flex;
+}
+.info2 .about{
+    width: 50%;
+}
+.info2 .about2{
+    width: 50%;
+}
+.haha{
+    margin: 7px;
+    text-align: center;
+}

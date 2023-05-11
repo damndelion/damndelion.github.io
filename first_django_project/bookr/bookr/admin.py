@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from first_django_project.bookr.final.models import Book
+
 
 
 class BookrAdminSite(admin.AdminSite):

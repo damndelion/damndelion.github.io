@@ -3,8 +3,8 @@ from django.conf import settings
 from django.urls import path, include
 from django.conf.urls.static import static
 
-import final.views
 
+import final.views
 
 
 # urlpatterns = [
@@ -29,6 +29,7 @@ urlpatterns = [
     path('reservation/', final.views.reservation),
     path('register/', final.views.register, name="register"),
     path('admin/', admin.site.urls),
+    path('restaurant/<int:id>/', final.views.restaurant_detail, name='restaurant_detail'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

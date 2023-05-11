@@ -5,7 +5,7 @@
 <br>
 <br>
 <h2>Profile</h2>
-<div>
+<div >
   <p>
       Username: {{ request.user.username }} <br>
       Date Joined: {{ request.user.date_joined }} <br>
@@ -16,9 +16,9 @@
         {%for item in reservation_list%}
         <p>Name: <span>{{item.reservation.Name}}</span></p>
         <p>Date: <span>{{item.reservation.Date}}</span></p>
+        <p>Date: <span>{{item.reservation.Res_name}}</span></p>
         {%endfor%}
     </div>
-
   </p>
 </div>
 {% endblock %}
