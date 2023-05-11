@@ -11,7 +11,6 @@
 {% if form.errors.items|length == 1 %}{% translate "Please correct the error below." %}{% else %}{% translate "Please correct the errors below." %}{% endif %}
 </p>
 {% endif %}
-
 {% if form.non_field_errors %}
 {% for error in form.non_field_errors %}
 <p class="errornote">
