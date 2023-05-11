@@ -1,6 +1,25 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content%}
+<style>
+    .reservation1{
+        position:relative; 
+        margin-top:100px;
+    }
+    .reservation{
+        margin: 10px; 
+        text-align: center; 
+        padding: 10px;
+        margin-left: 180px; 
+        text-decoration: none; 
+        text-transform: uppercase; 
+        font-size: 30px; 
+        font-weight: 400;
+        border-radius: 10px;
+        background-color:rgb(218, 20, 20); 
+        color: black;
+    }
+</style>
 <link rel="stylesheet" href="{% static 'home.css' %}">
 <div class="kettik">
     <div class="kettik_left">
@@ -9,7 +28,7 @@
     <div class="kettik_right">
         <div class="olivier">
             <div style="margin: auto;"> 
-                <img src="{% static 'images/olivier.jpg' %}" alt="">
+                <img style="object-fit: cover;" src="{% static 'images/olivier.jpg' %}" alt="">
             </div>
             <div class="info">
                 <div class="good">
@@ -28,86 +47,86 @@
             </div>
             <div class="info2">
                 <div class="about">
-                    <h1 style="text-align: center;">About restaurant</h1>
+                    <h1 style="text-align: center; color: rgb(218, 20, 20);">About restaurant</h1>
                     <p style="margin: 10px;">
                         Элегантный интерьер в стиле английских парадных, уютную веранду и отменную кухню по достоинству оценила 
                         требовательная публика Алматы. Ресторан удивляет гостей разнообразной кухней, в которой взяты за основу 
                         современные технологии приготовления продуктов и авторский взгляд шеф-повара на русскую, европейскую и 
                         японскую кухни
                     </p>
+                    <div class="reservation1">
+                        <a class="reservation" href="">make reservation</a>
+                    </div>
                 </div>
                 <div class="about2">
-                    <h1 style="text-align: center;">Information</h1>
+                    <h1 style="text-align: center;color: rgb(218, 20, 20);">Information</h1>
                     <div style="display: flex;">
-                        <div style="width:45%; border: 1px solid;">
+                        <div style="width:45%;">
                             <div class="haha">
                                 <div class="good">
                                     <img src="https://pgr.kz/wp-content/themes/parmigianogroup/img/icon/chek.png" alt="">
-                                    <h4 style="align-items: center; font-weight: 500;">
+                                    <h4 style="align-items: center; font-weight: 300;">
                                         Average check:  <span style="font-weight:1000">18000</span>
                                     </h4>
                                 </div>
                             </div>
                             <div class="haha">
                                 <div class="good">
-                                    <img src="https://pgr.kz/wp-content/themes/parmigianogroup/img/icon/chek.png" alt="">
-                                    <h4 style="align-items: center; font-weight: 500;">
-                                        Average check:  <span style="font-weight:1000">18000</span>
+                                    <img src="https://pgr.kz/wp-content/themes/parmigianogroup/img/icon/kitch2.png" alt="">
+                                    <h4 style="font-weight: 300; text-align: start;">
+                                        Kitchen:  <span style="font-weight:1000">European, Russian, Japanese</span>
                                     </h4>
                                 </div>
                             </div>
                             <div class="haha">
                                 <div class="good">
-                                    <img src="https://pgr.kz/wp-content/themes/parmigianogroup/img/icon/chek.png" alt="">
-                                    <h4 style="align-items: center; font-weight: 500;">
-                                        Average check:  <span style="font-weight:1000">18000</span>
+                                    <img src="https://pgr.kz/wp-content/themes/parmigianogroup/img/icon/clock.png" alt="">
+                                    <h4 style="align-items: center; font-weight: 300;">
+                                        Work time:  <span >24/7</span>
                                     </h4>
                                 </div>
                             </div>
                             <div class="haha"> 
                                 <div class="good">
-                                    <img src="https://pgr.kz/wp-content/themes/parmigianogroup/img/icon/chek.png" alt="">
-                                    <h4 style="align-items: center; font-weight: 500;">
-                                        Average check:  <span style="font-weight:1000">18000</span>
-                                    </h4>
+                                </div>
+                                    <img style="width: 200px; height: 300px; object-fit: cover;" src="https://pgr.kz/wp-content/uploads/2019/06/Olive-zal.jpeg" alt="">
+                                <div>
+                                        
+                                    
                                 </div>
                             </div>
                         </div>
 
 
-
-
-                        <div style="width: 45%; border: 1px solid; margin-left: 10px; text-align: center;">
+                        <div style="width: 45%; margin-left: 10px; text-align: center;">
                             <div class="haha">
                                 <div class="good">
-                                    <img src="https://pgr.kz/wp-content/themes/parmigianogroup/img/icon/chek.png" alt="">
-                                    <h4 style="align-items: center; font-weight: 500;">
-                                        Average check:  <span style="font-weight:1000">18000</span>
+                                    <img src="https://pgr.kz/wp-content/themes/parmigianogroup/img/icon/posad.png" alt="">
+                                    <h4 style="align-items: center; font-weight: 300;">
+                                        Seating:  <span style="font-weight:1000">148</span>
                                     </h4>
                                 </div>
                             </div>
                             <div class="haha">
                                 <div class="good">
-                                    <img src="https://pgr.kz/wp-content/themes/parmigianogroup/img/icon/chek.png" alt="">
-                                    <h4 style="align-items: center; font-weight: 500;">
-                                        Average check:  <span style="font-weight:1000">18000</span>
+                                    <img src="https://pgr.kz/wp-content/themes/parmigianogroup/img/icon/qeen.png" alt="">
+                                    <h4 style="text-align: start; font-weight: 300;">
+                                        VIP-zone:  <span style="font-weight:1000">1 hall - 12 seats, 2 hall - 9 seats</span>
                                     </h4>
                                 </div>
                             </div>
                             <div class="haha">
                                 <div class="good">
-                                    <img src="https://pgr.kz/wp-content/themes/parmigianogroup/img/icon/chek.png" alt="">
-                                    <h4 style="align-items: center; font-weight: 500;">
-                                        Average check:  <span style="font-weight:1000">18000</span>
+                                    <img src="https://pgr.kz/wp-content/themes/parmigianogroup/img/icon/short.png" alt="">
+                                    <h4 style="align-items: center; font-weight: 300;">
+                                        Chef:  <span>Sheetov Vanya</span>
                                     </h4>
                                 </div>
                             </div>
                             <div class="haha">
                                 <div class="good">
-                                    <img src="https://pgr.kz/wp-content/themes/parmigianogroup/img/icon/chek.png" alt="">
-                                    <h4 style="align-items: center; font-weight: 500;">
-                                        Average check:  <span style="font-weight:1000">18000</span>
-                                    </h4>
+                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2906.3136035183775!2d76.94555311548456!3d43.24484887913741!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38836ec3a59915fb%3A0xf7ac3121d5070e4d!2sOlivier+Restaurant+%26+Bar!5e0!3m2!1sru!2sua!4v1558522069687!5m2!1sru!2sua" 
+                                    width="400" height="300" frameborder="0" style="border:0; width: 90%;" allowfullscreen=""></iframe>
                                 </div>
                             </div>
                         </div>
