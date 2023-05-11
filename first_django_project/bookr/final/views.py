@@ -80,6 +80,9 @@ def register(request):
     form = NewUserForm()
     return render(request, 'registration/register.html', context={"form": form})
 
+def logout(request):
+    logout(request)
+    return redirect(index)
 
 def restaurant_detail(request, id):
     restaurant = get_object_or_404(Restaurant, id=id)
