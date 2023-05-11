@@ -4,22 +4,16 @@ from django.db import migrations, models
 from PIL import Image
 
 
-
-
-
-
-
-
 class Reservation(models.Model):
-    Username = models.CharField(help_text="Username", max_length = 40)
-    Name = models.CharField(help_text = "Username's name", max_length = 40)
-    Email = models.CharField(help_text = "Enmail-address", max_length = 50)
-    Phone_num = models.CharField(help_text="Phone number", max_length = 50)
-    Number= models.IntegerField(help_text = "Number of guests")
-    Date= models.DateField(help_text = "Date of reservation")
-    Time = models.CharField(help_text = "Time", max_length = 30)
-    Res_name = models.CharField(help_text="restaurant name", max_length = 40)
-    Message = models.TextField(max_length = 200)
+    Username = models.CharField(help_text="Username", max_length=40)
+    Name = models.CharField(help_text="Username's name", max_length=40)
+    Email = models.CharField(help_text="Enmail-address", max_length=50)
+    Phone_num = models.CharField(help_text="Phone number", max_length=50)
+    Number = models.IntegerField(help_text="Number of guests")
+    Date = models.DateField(help_text="Date of reservation")
+    Time = models.CharField(help_text="Time", max_length=30)
+    Res_name = models.CharField(help_text="restaurant name", max_length=40)
+    Message = models.TextField(max_length=200)
 
     def __str__(self):
         return self.Name
@@ -28,6 +22,14 @@ class Reservation(models.Model):
 class Restaurant(models.Model):
     title = models.CharField(max_length=70, help_text="The title of the Restaurant.")
     description = models.TextField(help_text="Description of Restaurant")
+    logo = models.ImageField(upload_to="restaurant_img/")
     img1 = models.ImageField(upload_to="restaurant_img/")
     img2 = models.ImageField(upload_to="restaurant_img/")
     img3 = models.ImageField(upload_to="restaurant_img/")
+
+
+class Menu(models.Model):
+    name = models.CharField(max_length=70, help_text="Name of the item")
+    price = models.IntegerField(help_text="Price of item")
+    restaurant_id = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
+    img = models.ImageField(upload_to="menu_img")

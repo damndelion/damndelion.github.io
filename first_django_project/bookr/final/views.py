@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from PIL import Image
-from .models import Restaurant, Reservation
+from .models import Restaurant, Reservation, Menu
 from .utils import average_rating
 from .forms import NewUserForm
 from django.utils import timezone
@@ -13,6 +13,7 @@ from django.conf import settings
 from io import BytesIO
 from django.core.files.images import ImageFile
 import os
+
 
 def index(request):
     return render(request, "home.html")
@@ -23,9 +24,9 @@ def profile(request):
     username = request.user.username
     reservations = Reservation.objects.filter(Username=username)
     reservation_list = []
-    for reservation in reservations :
+    for reservation in reservations:
         reservation_list.append({'reservation': reservation})
-    return render(request, 'profile.html',{'reservation_list':reservation_list})
+    return render(request, 'profile.html', {'reservation_list': reservation_list})
 
 
 @login_required
@@ -46,7 +47,7 @@ def reservation(request):
         for reservation in reservations:
             reservation_list.append({'reservation': reservation})
 
-        reservationss = Reservation.objects.filter(Username = Username)
+        reservationss = Reservation.objects.filter(Username=Username)
         reservation_list2 = []
         for reservation in reservationss:
             reservation_list2.append({'reservation': reservation})
@@ -58,7 +59,8 @@ def reservation(request):
             messages.error(request, "There are more than 8 reservations on this user")
             return redirect('profile')
         reservation = Reservation.objects.create(Username=Username, Name=Name, Email=Email, Phone_num=Phone_num,
-                                          Date=Date, Number=Number, Time=Time,Res_name=Res_name, Message=Message)
+                                                 Date=Date, Number=Number, Time=Time, Res_name=Res_name,
+                                                 Message=Message)
         reservation.save()
     return render(request, 'reservation.html')
 
@@ -83,12 +85,16 @@ def restaurant_detail(request, id):
     restaurant = get_object_or_404(Restaurant, id=id)
     title = restaurant.title
     description = restaurant.description
+    logo = restaurant.logo
     img1 = restaurant.img1
     img2 = restaurant.img2
     img3 = restaurant.img3
-    return render(request, "restaurant_detail.html", {"title": title, "description": description,
-                                                      "img1": img1, "img2": img2, "img3": img3})
+    menu = Menu.objects.filter(restaurant_id=id)
+    print(menu)
 
+    return render(request, "restaurant_detail.html", {"title": title, "description": description,
+                                                      "logo": logo, "img1": img1, "img2": img2, "img3": img3,
+                                                      "menus": menu})
 
 # def book_media(request, pk):
 #     book = get_object_or_404(Book, pk=pk)
@@ -113,5 +119,3 @@ def restaurant_detail(request, id):
 #
 #     return render(request, "reviews/instance-form.html",
 #                   {"instance": book, "form": form, "model_type": "Book", "is_file_upload": True})
-
-
