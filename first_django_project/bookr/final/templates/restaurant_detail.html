@@ -14,7 +14,10 @@
         .content-left{
             background-color: #fb5849;
         }
-
+        .text{
+            font-size: 28px;
+            text-align: center;
+        }
         .logo{
             position: absolute;
             margin-left: 7%;
@@ -57,6 +60,13 @@
         <input type="submit" style="display:none;">
     </form>
 </div>
+{%if not menu and search%}
+<div class="menus">
+    <div class="chast_top">
+        <h1 class="text">Couldn't find results for the query "{{search}}". Try changing the search condition.</h1>
+    </div>
+</div>
+{%else%}
 <div class="menus">
         <div class="chast_top">
             <ul class="chast">
@@ -79,6 +89,8 @@
             </ul>
         </div>
     </div>
+
+{%endif%}
 
 
 {% endblock %}

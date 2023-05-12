@@ -94,7 +94,7 @@ def ItemSearchView(request, id):
         menu = Menu.objects.filter(restaurant_id=id).filter(name__contains=search)
         return render(request, "restaurant_detail.html", {"title": title, "description": description,
                                                           "logo": logo, "img1": img1, "img2": img2, "img3": img3,
-                                                          "menus": menu, 'id': id})
+                                                          "menus": menu, 'id': id, 'search': search})
 
 def restaurant_detail(request, id):
     restaurant = get_object_or_404(Restaurant, id=id)
