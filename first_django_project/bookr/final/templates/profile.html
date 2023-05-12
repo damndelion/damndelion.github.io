@@ -1,17 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
-
-
-
-{% block title %}profile{% endblock %}
 {% block content %}
-
-
 <link rel="stylesheet" href="{% static 'profile.css' %}">
-
-<br>
-<br>
-<br>
 <link rel="stylesheet" href="{% static 'profile.css' %}">
 <h2 class="h-2">My Profile:</h2>
 <div class="allnews">
@@ -31,19 +21,6 @@
         <p>Date: <span>{{item.reservation.Res_name}}</span></p>
         {%endfor%}
     </div>
-
   </div>
-
-
-<br>
-<br>
-<br><br>
-<br>
-<br><br>
-
-
-
-
-
 
 {% endblock %}

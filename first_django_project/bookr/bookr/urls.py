@@ -26,6 +26,7 @@ urlpatterns = [
     path('accounts/', include(('django.contrib.auth.urls', 'auth'), namespace='accounts')),
     path('restaurant/<int:id>/search', final.views.ItemSearchView, name='search_items'),
     path('accounts/profile/', final.views.profile, name='profile'),
+    path('accounts/logout/', final.views.profile, name='profile'),
     path('', final.views.index),
     path('reservation/', final.views.reservation),
     path('register/', final.views.register, name="register"),

@@ -3,8 +3,22 @@
 
 {% block content %}
 
-<p>{% trans "Thanks for spending some quality time with the Web site today." %}</p>
+<div class="content">
+    <h3 class="text-center">{% trans "Thanks for spending some quality time with the Web site today." %} </h3>
 
-<p><a href="{% url 'accounts:login' %}">{% trans 'Log in again' %}</a></p>
+    <h4 class="text-center"><a href="{% url 'accounts:login' %}">{% trans 'Log in again' %}</a></h4>
+</div>
+<style>
+    .content{
+        display: block;
+        margin-top: 5%;
+        font-family:'Poppins', sans-serif;
+
+    }
+    footer{
+        margin-top: 43%;
+    }
+
+</style>
 
 {% endblock %}

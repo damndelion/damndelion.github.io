@@ -61,7 +61,9 @@ def reservation(request):
         reservation = Reservation.objects.create(Username=Username, Name=Name, Email=Email, Phone_num=Phone_num,
                                                  Date=Date, Number=Number, Time=Time, Res_name=Res_name,
                                                  Message=Message)
+
         reservation.save()
+        messages.success(request, "Your table in \"{}\" was successfully reserved.".format(Res_name))
     return render(request, 'reservation.html')
 
 

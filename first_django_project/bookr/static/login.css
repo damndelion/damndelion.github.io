@@ -1,4 +1,4 @@
-<<<<<<< Updated upstream
+
 #content-main{
     width:100%;
     height:100%;
@@ -50,13 +50,14 @@ label{
     display: flex;
     height: 40px;
     width: 95%;
-    background-color: rgba(255,255,255,0.07);
+    background-color: rgba(255, 255, 255, 0.07);
     border-radius: 3px;
     padding: 0 10px;
     margin-top: 2px;
     font-size: 14px;
     font-weight: 300;
-=======
+}
+
 .login {
     background: var(--darkened-bg);
     height: auto;
@@ -114,5 +115,5 @@ label{
 
 .login .password-reset-link {
     text-align: center;
->>>>>>> Stashed changes
+
 }
