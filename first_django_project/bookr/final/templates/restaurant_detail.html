@@ -3,7 +3,14 @@
 {% load static %}
 
     <style>
-
+        .inp{
+            border: 1px solid #d9dcde;
+            margin: 13px;
+            width: 495px;
+            border-color: #d9dcde;
+            padding: 13px 52px 13px 45px;
+            border-radius: 8px;
+        }
         .content-left{
             background-color: #fb5849;
         }
@@ -43,6 +50,13 @@
 
             </div>
         </div>
+<div class="search">
+    <form action="{% url 'search_items' id %}" method="GET">
+        {% csrf_token %}
+        <input class="inp" type="text" name = "search_item" placeholder="Я хочу найти">
+        <input type="submit" style="display:none;">
+    </form>
+</div>
 <div class="menus">
         <div class="chast_top">
             <ul class="chast">

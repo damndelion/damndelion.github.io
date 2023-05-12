@@ -80,6 +80,21 @@ def register(request):
     form = NewUserForm()
     return render(request, 'registration/register.html', context={"form": form})
 
+def ItemSearchView(request, id):
+    print(id)
+    if request.method == 'GET':
+        search = request.GET.get('search_item')
+        restaurant = get_object_or_404(Restaurant, id=id)
+        title = restaurant.title
+        description = restaurant.description
+        logo = restaurant.logo
+        img1 = restaurant.img1
+        img2 = restaurant.img2
+        img3 = restaurant.img3
+        menu = Menu.objects.filter(restaurant_id=id).filter(name__contains=search)
+        return render(request, "restaurant_detail.html", {"title": title, "description": description,
+                                                          "logo": logo, "img1": img1, "img2": img2, "img3": img3,
+                                                          "menus": menu, 'id': id})
 
 def restaurant_detail(request, id):
     restaurant = get_object_or_404(Restaurant, id=id)
@@ -94,7 +109,7 @@ def restaurant_detail(request, id):
 
     return render(request, "restaurant_detail.html", {"title": title, "description": description,
                                                       "logo": logo, "img1": img1, "img2": img2, "img3": img3,
-                                                      "menus": menu})
+                                                      "menus": menu, "id" : id})
 
 # def book_media(request, pk):
 #     book = get_object_or_404(Book, pk=pk)
