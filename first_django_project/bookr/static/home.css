@@ -1,3 +1,4 @@
+
 .kettik{
     display: flex;
 }
@@ -6,7 +7,6 @@
 }
 .name{
     text-align: center;
-    font-size: 60px;
     color:rgb(218, 20, 20) ;
 }
 .kettik_left{
@@ -51,8 +51,9 @@
     background-color: rgb(255, 255, 255);
     color: rgb(0, 0, 0);
 }
-.good a:after{
+.good a:hover{
     background-color: #fcb900;
+    color: #fcb900;
 }
 .info2{
     display: flex;
