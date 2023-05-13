@@ -133,8 +133,8 @@ def email(request):
                                                           date=request.POST.get('date'), time=request.POST.get('time'),
                                                           num=request.POST.get('number'),
                                                           comment=request.POST.get('message'))
-        from_email = "210103468@stu.sdu.edu.kz"
-        if subject and message and from_email:
+
+        if subject and message:
             try:
                 send_mail(subject, message, 'settings.EMAIL_HOST_USER', ["210103468@stu.sdu.edu.kz"],
                           fail_silently=False)
