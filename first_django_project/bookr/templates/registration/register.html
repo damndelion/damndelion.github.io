@@ -3,12 +3,12 @@
 {% block content %}
 
 <link rel="stylesheet" href="{% static 'register.css' %}">
-<div class="content_reg" >
-	<div class="container py-5" style=" width: 750px; margin: auto; background-color: aliceblue;margin-top: 40px; border-radius: 30px;">
-		<h1 style="text-align: center; color: rgb(255, 97, 97); font-size: 45px;">Register</h1>
+<div class="content_reg" style="background-image: url('/static/images/loginbg.jpg');">
+	<div class="container py-5" style=" width: 650px; margin: auto; background-color: rgb(255, 255, 255);margin-top: 40px; border-radius: 30px; margin-bottom: 40px;">
+		<h1 style="text-align: center; color: rgb(255, 97, 97); font-size: 60px;">Register</h1>
 		{% for message in messages %}
 		<div style="text-align: center;">
-			<p style="color: rgb(255, 0, 0);font-size: 20px;"><em>{{ message.level_tag|title }}:</em> {{ message }}</p>
+			<p style="color: rgb(255, 0, 0);font-size: 15px;"><em>{{ message.level_tag|title }}:</em> {{ message }}</p>
 		</div>
 		{% endfor %}
 		<form method="post" style="padding: 30px;">
@@ -16,12 +16,12 @@
 				<div style="margin-top: 10px;">
 					{% csrf_token %}
 				</div>
-				<div style="font-size: 20px;">
+				<div style="font-size: 16px;">
 					{{ form.as_p }}
 				</div>
 			</div>
 			<p style="text-align: center;">
-				<input type="submit" value="Submit">
+				<input style="color: black; background-color: rgb(241, 113, 113); padding: 10px 40px 10px 40px; font-size: 20px; border-radius: 10px;" type="submit" value="Submit">
 			</p>
 		</form>
 		<p class="text-center">If you already have an account, <a href="/accounts/login">login</a> instead.</p>
