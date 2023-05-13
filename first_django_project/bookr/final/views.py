@@ -130,17 +130,22 @@ def email(request):
                   "Date: {date}\n" \
                   "Time: {time}\n" \
                   "Number of guests: {num}\n" \
-                  "Comment: {comment}\n"\
-                  "from Klassy reservation system".format(name=request.POST.get('name'), phone=request.POST.get('phone'),
-                                              date=request.POST.get('date'), time=request.POST.get('time'),
-                                              num=request.POST.get('number'), comment=request.POST.get('message'))
-        from_email = "210103468@stu.sdu.edu.kz"
-        if subject and message and from_email:
+                  "Comment: {comment}\n" \
+                  "from Klassy reservation system".format(name=request.POST.get('name'),
+                                                          phone=request.POST.get('phone'),
+                                                          date=request.POST.get('date'), time=request.POST.get('time'),
+                                                          num=request.POST.get('number'),
+                                                          comment=request.POST.get('message'))
+
+        if subject and message:
             try:
-                send_mail(subject, message, 'settings.EMAIL_HOST_USER', ["210103468@stu.sdu.edu.kz"], fail_silently=False)
+                send_mail(subject, message, 'settings.EMAIL_HOST_USER', ["210103468@stu.sdu.edu.kz"],
+                          fail_silently=False)
                 message = "Your reservation was sent successfully\n" + message
-                send_mail(subject, message, 'settings.EMAIL_HOST_USER', ["210103468@stu.sdu.edu.kz"], fail_silently=False)
+                send_mail(subject, message, 'settings.EMAIL_HOST_USER', ["210103468@stu.sdu.edu.kz"],
+                          fail_silently=False)
             except BadHeaderError:
                 return HttpResponse("Invalid header found.")
-            return HttpResponseRedirect("/")
-        render(request, "home.html")
+            messages.success(request, "Your table  was successfully reserved.")
+            return HttpResponseRedirect("/reservation")
+    return render(request, "reservation.html")

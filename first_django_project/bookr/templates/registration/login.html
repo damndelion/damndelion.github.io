@@ -4,24 +4,29 @@
 {% block content %}
 
 <link rel="stylesheet" href="{% static 'login.css' %}">
-
-{% if form.errors and not form.non_field_errors %}
-<p class="errornote">
-{% if form.errors.items|length == 1 %}{% translate "Please correct the error below." %}{% else %}{% translate "Please correct the errors below." %}{% endif %}
-</p>
-{% endif %}
-{% if form.non_field_errors %}
-{% for error in form.non_field_errors %}
-<p class="errornote">
-    {{ error }}
-</p>
-{% endfor %}
-{% endif %}
-<link rel="stylesheet" href="{% static ' login.css' %}">
-
+<style>
+  #login-form{
+  background-color: rgb(255, 255, 255);
+  }
+  #content-main{
+    height: 90vh;
+  }
+</style>
 
 <div id="content-main" style="background-image: url('/static/images/loginbg.jpg');">
   <form action="{% url 'accounts:login' %}" method="post" id="login-form">{% csrf_token %}
+    {% if form.errors and not form.non_field_errors %}
+      <p class="errornote">
+      {% if form.errors.items|length == 1 %}{% translate "Please correct the error below." %}{% else %}{% translate "Please correct the errors below." %}{% endif %}
+      </p>
+      {% endif %}
+      {% if form.non_field_errors %}
+      {% for error in form.non_field_errors %}
+      <p class="errornote" style="color: red; font-size: 16px; text-align: center;">
+          {{ error }}
+      </p>
+    {% endfor %}
+    {% endif %}
     <div class="form-row">
       {{ form.username.errors }}
       {{ form.username.label_tag }} {{ form.username }}
@@ -32,7 +37,7 @@
       <input type="hidden" name="next" value="{{ next }}">
     </div>
 
-    <div class="submit-row">
+    <div class="submit-row" style="border: 0px;">
       <input type="submit" class="btn" value="{% translate 'Log in' %}">
     </div>
   </form>
