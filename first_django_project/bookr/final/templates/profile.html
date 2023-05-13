@@ -2,18 +2,31 @@
 {% load static %}
 {% block content %}
 <style>
+    body{
+    color:white;
+    }
     .all{
-        margin-top: 120px;
-        margin-bottom: 120px;
+        padding-top: 120px;
+        padding-bottom: 120px;
         padding-left: 50px;
         padding-right: 50px;
+            background: url('/static/images/reservation-bg.jpg');
+
 
     }
 .container2::-webkit-scrollbar {
       width: 0;
       height: 0;
 }
+.change{
+padding: 10px;
+    background-color: #fb5849;
+    width: 150px;
+    text-align: center;
+    border-radius: 7px;
+}
     .container2{
+    color: black;
     overflow: auto;
       -ms-overflow-style: none;
       scrollbar-width: none;
@@ -24,7 +37,7 @@
     overflow: auto;
     font-weight: 600;
     overflow-y: scroll;
-    height: 400px;
+    height: 380px;
     padding-left: 25px;
     background-color: white;
     border-radius: 10px;
@@ -35,24 +48,29 @@
     }
     .right{
         width:200px;
-        margin: auto auto;
+        margin: auto;
+    }
+    .title{
+        margin: 10px;
+        font-size: 21px;
     }
 </style>
 <div class="all">
     <h2 style="margin-bottom: 50px;font-size: 40px; font-weight: 800;">My Profile:</h2>
     <div style="display:flex;justify-content: space-around;">
-        <div>
-    <img src='{{photo.url}}'  alt="#" style="width: 250px" >
+        <div style="display:flex">
+    <img src='{{photo.url}}'  alt="#" style="width: 300px; margin-right: 30px;" >
   <div class="container1">
       <h4 class="title">Username: <span>{{ request.user.username }}</span> </h4>
       <h4 class="title">Date Joined: <span>{{ request.user.date_joined }} </span></h4>
       <h4 class="title">Email: <span>{{ request.user.email }}</span></h4>
       <h4 class="title">Last Login: <span>{{ request.user.last_login }}</span></h4>
-      <div class="change"><a href="" style="text-decoration:none;color:black;">Change photo</a></div>
+      <div class="change"><a href="" style="text-decoration:none;color:white;">Change photo</a></div>
   </div>
   </div>
-    <div class="container2">
-<!--        <h1>Reservations</h1>-->
+        <div style="text-align:center">
+            <h1 style="margin-bottom: 10px">Reservations</h1>
+            <div class="container2">
         {%for item in reservation_list%}
         <div style="display: flex;height: 200px">
         <img src={{item.logo}} class="logo" >
@@ -64,6 +82,7 @@
         </div>
         {%endfor%}
     </div>
+        </div>
     </div>
   </div>
 

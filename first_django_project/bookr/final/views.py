@@ -100,7 +100,10 @@ def register(request):
     if request.method == "POST":
         form = NewUserForm(request.POST)
         if form.is_valid():
+            username = request.POST.get('username')
             user = form.save()
+            new = Photo.objects.create(username = username)
+            new.save()
             messages.success(request, "Registration successful.")
             return redirect("/accounts/profile/")
         messages.error(request, "Unsuccessful registration. Invalid information.")
