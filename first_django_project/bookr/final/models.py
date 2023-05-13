@@ -35,6 +35,7 @@ class Menu(models.Model):
     restaurant_id = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     img = models.ImageField(upload_to="menu_img")
 
+<<<<<<< HEAD
 class home(models.Model):
     name_res = models.CharField(max_length=50, help_text="restaurant name")
     img_res = models.ImageField(upload_to='home_img')
@@ -50,3 +51,8 @@ class home(models.Model):
     about_img = models.ImageField(upload_to='home_img')
     map_res = models.CharField(max_length=255)
     
+=======
+class Photo(models.Model):
+    avatar = models.ImageField(upload_to="ava/",default="ava/profile-icon-design-free-vector_1.png")
+    username = models.CharField(max_length=70)
+>>>>>>> 2f34bbd370707c94f26a085815fd2900099f3aab
