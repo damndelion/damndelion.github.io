@@ -9,7 +9,14 @@
         padding-right: 50px;
 
     }
+.container2::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+}
     .container2{
+    overflow: auto;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     border: 2px solid black;
     display: flex;
     flex-wrap: wrap;
@@ -18,10 +25,17 @@
     font-weight: 600;
     overflow-y: scroll;
     height: 400px;
+    padding-left: 25px;
+    background-color: white;
+    border-radius: 10px;
     }
     .logo{
-            width: 70%;
-        height: 90%;
+            width: 230px;
+        height: 200px;
+    }
+    .right{
+        width:200px;
+        margin: auto auto;
     }
 </style>
 <div class="all">
