@@ -1,7 +1,8 @@
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.core.exceptions import PermissionDenied
+from django.core.mail import send_mail
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, BadHeaderError, HttpResponseRedirect
 from django.contrib import messages
 from PIL import Image
 from .models import Restaurant, Reservation, Menu
@@ -31,6 +32,7 @@ def profile(request):
 
 @login_required
 def reservation(request):
+    restaurants = Restaurant.objects.all()
     if request.method == 'POST':
         Username = request.user.username
         Name = request.POST.get('name')
@@ -64,7 +66,8 @@ def reservation(request):
 
         reservation.save()
         messages.success(request, "Your table in \"{}\" was successfully reserved.".format(Res_name))
-    return render(request, 'reservation.html')
+
+    return render(request, 'reservation.html', {"restaurants": restaurants})
 
 
 def login(request):
@@ -82,6 +85,7 @@ def register(request):
     form = NewUserForm()
     return render(request, 'registration/register.html', context={"form": form})
 
+
 def ItemSearchView(request, id):
     print(id)
     if request.method == 'GET':
@@ -98,6 +102,7 @@ def ItemSearchView(request, id):
                                                           "logo": logo, "img1": img1, "img2": img2, "img3": img3,
                                                           "menus": menu, 'id': id, 'search': search})
 
+
 def restaurant_detail(request, id):
     restaurant = get_object_or_404(Restaurant, id=id)
     title = restaurant.title
@@ -108,31 +113,27 @@ def restaurant_detail(request, id):
     img3 = restaurant.img3
     menu = Menu.objects.filter(restaurant_id=id)
 
-
     return render(request, "restaurant_detail.html", {"title": title, "description": description,
                                                       "logo": logo, "img1": img1, "img2": img2, "img3": img3,
-                                                      "menus": menu, "id" : id})
+                                                      "menus": menu, "id": id})
 
-# def book_media(request, pk):
-#     book = get_object_or_404(Book, pk=pk)
-#     if request.method == "POST":
-#         form = BookMediaForm(request.POST, files=request.FILES, instance=book)
-#         if form.is_valid():
-#             book = form.save(False)
-#             cover = form.cleaned_data.get("cover")
-#             if cover:
-#                 image = Image.open(cover)
-#                 image.thumbnail((300, 300))
-#                 image_data = BytesIO()
-#                 image.save(fp=image_data, format=cover.image.format)
-#                 image_file = ImageFile(image_data)
-#                 book.cover.save(cover.name, image_file)
-#             book.save()
-#
-#             messages.success(request, "Book \"{}\" was successfully updated.".format(book))
-#             return redirect("book_detail", book.pk)
-#     else:
-#         form = BookMediaForm(instance=book)
-#
-#     return render(request, "reviews/instance-form.html",
-#                   {"instance": book, "form": form, "model_type": "Book", "is_file_upload": True})
+
+def email(request):
+    if request.method == "POST":
+        subject = "RESERVATION"
+        message = "Name: {name}," \
+                  "Phone number: {phone}" \
+                  "Date: {date}" \
+                  "Time: {time}" \
+                  "Number of guests: {num}" \
+                  "Comment: {comment}".format(name=request.POST.get('name'), phone=request.POST.get('phone'),
+                                              date=request.POST.get('date'), time=request.POST.get('time'),
+                                              num=request.POST.get('number'), comment=request.POST.get('message'))
+        from_email = "210103468@stu.sdu.edu.kz"
+        if subject and message and from_email:
+            try:
+                send_mail(subject, message, from_email, ["daniarermakhan003@gmail.com"])
+            except BadHeaderError:
+                return HttpResponse("Invalid header found.")
+            return HttpResponseRedirect("/")
+        render(request, "home.html")
