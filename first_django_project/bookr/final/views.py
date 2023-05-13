@@ -16,11 +16,12 @@ def index(request):
 def profile(request):
     username = request.user.username
     reservations = Reservation.objects.filter(Username=username)
+
     reservation_list = []
     for reservation in reservations:
-        title = get_object_or_404(Restaurant, title = reservation.Res_name)
+        title = get_object_or_404(Restaurant, title=reservation.Res_name)
         logo = title.logo.url
-        reservation_list.append({'logo' : logo,'reservation': reservation})
+        reservation_list.append({'logo': logo, 'reservation': reservation})
 
     photo = get_object_or_404(Photo,username=username)
     ava = photo.avatar
@@ -29,6 +30,7 @@ def profile(request):
 
 @login_required
 def reservation(request):
+    # Reservation
     restaurants = Restaurant.objects.all()
     if request.method == 'POST':
         Username = request.user.username
@@ -60,10 +62,9 @@ def reservation(request):
         reservation = Reservation.objects.create(Username=Username, Name=Name, Email=Email, Phone_num=Phone_num,
                                                  Date=Date, Number=Number, Time=Time, Res_name=Res_name,
                                                  Message=Message)
-
         reservation.save()
 
-
+        # Send email
         subject = "RESERVATION"
         message = "Name: {name},\n" \
                   "Phone number: {phone}\n" \
@@ -126,15 +127,5 @@ def ItemSearchView(request, id):
 
 def restaurant_detail(request, id):
     restaurant = get_object_or_404(Restaurant, id=id)
-    title = restaurant.title
-    description = restaurant.description
-    logo = restaurant.logo
-    img1 = restaurant.img1
-    img2 = restaurant.img2
-    img3 = restaurant.img3
     menu = Menu.objects.filter(restaurant_id=id)
-
-    return render(request, "restaurant_detail.html", {"title": title, "description": description,
-                                                      "logo": logo, "img1": img1, "img2": img2, "img3": img3,
-                                                      "menus": menu, "id": id})
-
+    return render(request, "restaurant_detail.html", {"restaurant": restaurant, "menus": menu, "id": id})
