@@ -3,9 +3,7 @@
 {% load static %}
 {% block content %}
 <style>
-  #content-main{
-    margin-left: 35%;
-  }
+  
 
 </style>
 <link rel="stylesheet" href="{% static 'login.css' %}">
@@ -25,24 +23,22 @@
 <link rel="stylesheet" href="{% static ' login.css' %}">
 
 
-<div id="content-main">
+<div id="content-main" style="background-image: url('/static/images/loginbg.jpg');">
+  <form action="{% url 'accounts:login' %}" method="post" id="login-form">{% csrf_token %}
+    <div class="form-row">
+      {{ form.username.errors }}
+      {{ form.username.label_tag }} {{ form.username }}
+    </div>
+    <div class="form-row">
+      {{ form.password.errors }}
+      {{ form.password.label_tag }} {{ form.password }}
+      <input type="hidden" name="next" value="{{ next }}">
+    </div>
 
-
-<form action="{% url 'accounts:login' %}" method="post" id="login-form">{% csrf_token %}
-  <div class="form-row">
-    {{ form.username.errors }}
-    {{ form.username.label_tag }} {{ form.username }}
-  </div>
-  <div class="form-row">
-    {{ form.password.errors }}
-    {{ form.password.label_tag }} {{ form.password }}
-    <input type="hidden" name="next" value="{{ next }}">
-  </div>
-
-  <div class="submit-row">
-    <input type="submit" class="btn" value="{% translate 'Log in' %}">
-  </div>
-</form>
+    <div class="submit-row">
+      <input type="submit" class="btn" value="{% translate 'Log in' %}">
+    </div>
+  </form>
 </div>
 
 {% endblock %}
