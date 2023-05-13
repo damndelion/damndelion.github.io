@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import user_passes_test, login_required
+from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, BadHeaderError, HttpResponseRedirect
@@ -10,9 +11,10 @@ from .forms import NewUserForm
 from django.conf import settings
 from django.utils import timezone
 from django.conf import settings
-from .models import Restaurant, Reservation, Menu, Photo
 
-from .forms import NewUserForm
+from io import BytesIO
+from django.core.files.images import ImageFile
+import os
 
 
 def index(request):
@@ -23,21 +25,17 @@ def index(request):
 def profile(request):
     username = request.user.username
     reservations = Reservation.objects.filter(Username=username)
-
     reservation_list = []
     for reservation in reservations:
-        title = get_object_or_404(Restaurant, title=reservation.Res_name)
+        title = get_object_or_404(Restaurant, title = reservation.Res_name)
         logo = title.logo.url
-        reservation_list.append({'logo': logo, 'reservation': reservation})
+        reservation_list.append({'logo' : logo,'reservation': reservation})
 
-    photo = get_object_or_404(Photo,username=username)
-    ava = photo.avatar
-    return render(request, 'profile.html', {'reservation_list': reservation_list, 'photo':ava})
+    return render(request, 'profile.html', {'reservation_list': reservation_list})
 
 
 @login_required
 def reservation(request):
-    # Reservation
     restaurants = Restaurant.objects.all()
     if request.method == 'POST':
         Username = request.user.username
@@ -69,32 +67,9 @@ def reservation(request):
         reservation = Reservation.objects.create(Username=Username, Name=Name, Email=Email, Phone_num=Phone_num,
                                                  Date=Date, Number=Number, Time=Time, Res_name=Res_name,
                                                  Message=Message)
+
         reservation.save()
-
-        # Send email
-        subject = "RESERVATION"
-        message = "Name: {name},\n" \
-                  "Phone number: {phone}\n" \
-                  "Date: {date}\n" \
-                  "Time: {time}\n" \
-                  "Number of guests: {num}\n" \
-                  "Comment: {comment}\n" \
-                  "from Klassy reservation system".format(name=request.POST.get('name'),
-                                                          phone=request.POST.get('phone'),
-                                                          date=request.POST.get('date'), time=request.POST.get('time'),
-                                                          num=request.POST.get('number'),
-                                                          comment=request.POST.get('message'))
-
-        if subject and message:
-            try:
-                send_mail(subject, message, 'settings.EMAIL_HOST_USER', ["210103468@stu.sdu.edu.kz"],
-                          fail_silently=False)
-                message = "Your reservation was sent successfully\n" + message
-                send_mail(subject, message, 'settings.EMAIL_HOST_USER', ["210103468@stu.sdu.edu.kz"],
-                          fail_silently=False)
-            except BadHeaderError:
-                return HttpResponse("Invalid header found.")
-            messages.success(request, "Your table  was successfully reserved.")
+        messages.success(request, "Your table in \"{}\" was successfully reserved.".format(Res_name))
 
     return render(request, 'reservation.html', {"restaurants": restaurants})
 
@@ -134,6 +109,12 @@ def ItemSearchView(request, id):
 
 def restaurant_detail(request, id):
     restaurant = get_object_or_404(Restaurant, id=id)
+    title = restaurant.title
+    description = restaurant.description
+    logo = restaurant.logo
+    img1 = restaurant.img1
+    img2 = restaurant.img2
+    img3 = restaurant.img3
     menu = Menu.objects.filter(restaurant_id=id)
 
     return render(request, "restaurant_detail.html", {"title": title, "description": description,
@@ -170,7 +151,7 @@ def email(request):
     return render(request, "reservation.html")
 
 
-def home_res(request):
+# def home_res(request):
     # homes = home.objects.all()
     # home_list = []
     # for homess in homes:
@@ -179,21 +160,20 @@ def home_res(request):
 
 
 
-    if request.method == 'POST':
-        name_res = request.POST.get('name_res')
-        img_res = request.POST.get('img_res')
-        number_res = request.POST.get('number_res')
-        address_res = request.POST.get('address_res')
-        about_res = request.POST.get('about_res')
-        avg_check = request.POST.get('avg_check')
-        kitchen = request.POST.get('kitchen')
-        work_time = request.POST.get('work_time')
-        seats = request.POST.get('seats')
-        vip_zone = request.POST.get('vip_zone')
-        chef = request.POST.get('chef')
-        about_img = request.POST.get('about_img')
-        map_res = request.POST.get('map_res')
-        re
+    # if request.metho
+    # name_res = request.POST.get('name_res')
+    # img_res = request.POST.get('img_res')
+    # number_res = request.POST.get('number_res')
+    # address_res = request.POST.get('address_res')
+    # about_res = request.POST.get('about_res')
+    # avg_check = request.POST.get('avg_check')
+    # kitchen = request.POST.get('kitchen')
+    # work_time = request.POST.get('work_time')
+    # seats = request.POST.get('seats')
+    # vip_zone = request.POST.get('vip_zone')
+    # chef = request.POST.get('chef')
+    # about_img = request.POST.get('about_img')
+    # map_res = request.POST.get('map_res')
         # homes_list = []
         # for homess in homesis:
         #     homes_list.append({'homess' : homess})
@@ -202,5 +182,3 @@ def home_res(request):
         #                                      "kitchen" : kitchen, "work_time" : work_time, "seats" : seats,
         #                                      "vip_zone" : vip_zone, "chef" : chef, "about_img" : about_img, "map_res" : map_res})
         #     return render(request, 'home.html', {'homes_list' :homes_list})
-
-    return render(request, "restaurant_detail.html", {"restaurant": restaurant, "menus": menu, "id": id})
