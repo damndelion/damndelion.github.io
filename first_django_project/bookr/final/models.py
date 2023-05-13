@@ -2,6 +2,7 @@
 from django.contrib import auth
 from django.db import migrations, models
 from PIL import Image
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Reservation(models.Model):
@@ -33,3 +34,19 @@ class Menu(models.Model):
     price = models.IntegerField(help_text="Price of item")
     restaurant_id = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     img = models.ImageField(upload_to="menu_img")
+
+class home(models.Model):
+    name_res = models.CharField(max_length=50, help_text="restaurant name")
+    img_res = models.ImageField(upload_to='home_img')
+    number_res = PhoneNumberField()
+    address_res = models.CharField(max_length=70, help_text='res address')
+    about_res = models.CharField(max_length=255, help_text='res about')
+    avg_check = models.IntegerField(help_text='avg')
+    kitchen = models.CharField(max_length=70, help_text='cook')
+    work_time = models.CharField(max_length=70)
+    seats = models.IntegerField(help_text='seats')
+    vip_zone = models.CharField(max_length=50)
+    chef = models.CharField(max_length=50)
+    about_img = models.ImageField(upload_to='home_img')
+    map_res = models.CharField(max_length=255)
+    

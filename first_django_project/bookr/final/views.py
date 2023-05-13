@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, BadHeaderError, HttpResponseRedirect
 from django.contrib import messages
 from PIL import Image
-from .models import Restaurant, Reservation, Menu
+from .models import Restaurant, Reservation, Menu, home
 from .utils import average_rating
 from .forms import NewUserForm
 from django.conf import settings
@@ -149,3 +149,38 @@ def email(request):
             messages.success(request, "Your table  was successfully reserved.")
             return HttpResponseRedirect("/reservation")
     return render(request, "reservation.html")
+
+
+def home_res(request):
+    # homes = home.objects.all()
+    # home_list = []
+    # for homess in homes:
+    #     home_list.append({'homess' :homess})
+    # return render(request, 'home.html' , {'home_list': home_list} )
+
+
+
+    if request.method == 'POST':
+        name_res = request.POST.get('name_res')
+        img_res = request.POST.get('img_res')
+        number_res = request.POST.get('number_res')
+        address_res = request.POST.get('address_res')
+        about_res = request.POST.get('about_res')
+        avg_check = request.POST.get('avg_check')
+        kitchen = request.POST.get('kitchen')
+        work_time = request.POST.get('work_time')
+        seats = request.POST.get('seats')
+        vip_zone = request.POST.get('vip_zone')
+        chef = request.POST.get('chef')
+        about_img = request.POST.get('about_img')
+        map_res = request.POST.get('map_res')
+        re
+        # homes_list = []
+        # for homess in homesis:
+        #     homes_list.append({'homess' : homess})
+        # return render(request, "home.html", {"name_res": name_res, "img_res": img_res,"number_res" : number_res,
+        #                                      "address_res" : address_res, "about_res" : about_res, "avg_check" : avg_check,
+        #                                      "kitchen" : kitchen, "work_time" : work_time, "seats" : seats,
+        #                                      "vip_zone" : vip_zone, "chef" : chef, "about_img" : about_img, "map_res" : map_res})
+        #     return render(request, 'home.html', {'homes_list' :homes_list})
+
