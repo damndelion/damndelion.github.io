@@ -5,12 +5,35 @@
 
 <link rel="stylesheet" href="{% static 'login.css' %}">
 <style>
+  .form-row input {
+    display: block;border: 0;
+    background: none;height: 25px;
+    width: 95%;background-color: rgba(255, 255, 255, 0.07);
+    border-radius: 3px;padding: 14px 10px;
+    margin-top: 2px;font-size: 14px;
+    font-weight: 300;border-radius: 24px;
+    outline: none;transition: 0.25s;
+    border: 2px solid #f4f4f4;color:black;
+    text-align: center;
+}
+.form-row input:hover{    border: 2px solid black;
+}
+.btn{    margin-top: 20px;
+    width: 100%;    background-color: #fb5849;
+    color: white;    padding: 14px 10px;
+    font-size: 18px;    font-weight: 600;
+    border-radius: 24px;    cursor: pointer;
+    border: 2px ;        outline: none;
+    transition: 0.25s;}
+    .btn:hover{    background-color: #fb5849d6;
+}
   #login-form{
   background-color: rgb(255, 255, 255);
   }
   #content-main{
     height: 90vh;
   }
+
 
 </style>
 

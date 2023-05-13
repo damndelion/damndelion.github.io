@@ -9,7 +9,14 @@
         padding-right: 50px;
 
     }
+.container2::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+}
     .container2{
+    overflow: auto;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     border: 2px solid black;
     display: flex;
     flex-wrap: wrap;
@@ -18,22 +25,30 @@
     font-weight: 600;
     overflow-y: scroll;
     height: 400px;
+    padding-left: 25px;
+    background-color: white;
+    border-radius: 10px;
     }
     .logo{
-            width: 70%;
-        height: 90%;
+            width: 230px;
+        height: 200px;
+    }
+    .right{
+        width:200px;
+        margin: auto auto;
     }
 </style>
 <div class="all">
     <h2 style="margin-bottom: 50px;font-size: 40px; font-weight: 800;">My Profile:</h2>
     <div style="display:flex;justify-content: space-around;">
         <div>
-    <img src="{% static 'images/profile.png' %}" alt="" style="width: 250px" >
+    <img src='{{photo.url}}'  alt="#" style="width: 250px" >
   <div class="container1">
       <h4 class="title">Username: <span>{{ request.user.username }}</span> </h4>
       <h4 class="title">Date Joined: <span>{{ request.user.date_joined }} </span></h4>
       <h4 class="title">Email: <span>{{ request.user.email }}</span></h4>
       <h4 class="title">Last Login: <span>{{ request.user.last_login }}</span></h4>
+      <div class="change"><a href="" style="text-decoration:none;color:black;">Change photo</a></div>
   </div>
   </div>
     <div class="container2">
@@ -44,7 +59,7 @@
         <div class = "right">
         <p>Name: <span>{{item.reservation.Name}}</span></p>
         <p>Date: <span>{{item.reservation.Date}}</span></p>
-        <p>Date: <span>{{item.reservation.Res_name}}</span></p>
+        <p>Restaurant: <span>{{item.reservation.Res_name}}</span></p>
         </div>
         </div>
         {%endfor%}
