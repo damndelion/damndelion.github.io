@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, BadHeaderError, HttpResponseRedirect
 from django.contrib import messages
 from PIL import Image
-from .models import Restaurant, Reservation, Menu, home
+from .models import Restaurant, Reservation, Menu, home, Photo
 from .utils import average_rating
 from .forms import NewUserForm
 from django.conf import settings
@@ -31,7 +31,9 @@ def profile(request):
         logo = title.logo.url
         reservation_list.append({'logo' : logo,'reservation': reservation})
 
-    return render(request, 'profile.html', {'reservation_list': reservation_list})
+    ava = get_object_or_404(Photo,username=username)
+    photo = ava.avatar
+    return render(request, 'profile.html', {'reservation_list': reservation_list, "photo": photo})
 
 
 @login_required
