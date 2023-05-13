@@ -54,6 +54,21 @@ padding: 10px;
         margin: 10px;
         font-size: 21px;
     }
+    .photo{
+        padding: 8px 1px;
+    border-radius: 10px;
+    padding-left: 10px;
+    margin-top: 10px;
+    display:block;
+    }
+    .sb{
+        padding: 5px 15px;
+    background-color: #fb5849;
+    border: 2px solid #fb5849;
+    color: white;
+    margin-left: 10px;
+    border-radius: 10px;
+    }
 </style>
 <div class="all">
     <h2 style="margin-bottom: 50px;font-size: 40px; font-weight: 800;">My Profile:</h2>
@@ -65,7 +80,16 @@ padding: 10px;
       <h4 class="title">Date Joined: <span>{{ request.user.date_joined }} </span></h4>
       <h4 class="title">Email: <span>{{ request.user.email }}</span></h4>
       <h4 class="title">Last Login: <span>{{ request.user.last_login }}</span></h4>
-      <div class="change"><a href="" style="text-decoration:none;color:white;">Change photo</a></div>
+      {% if change%}
+      <form method="POST" >
+          {% csrf_token %}
+          <input required type="file" class = "photo" name = "photo"  placeholder="Choose photo">
+          <input type="submit" class="sb" value="Submit">
+      </form>
+      {%else%}
+      <div class="change"><a href="{% url 'change' %}" style="text-decoration:none;color:white;">Change photo</a></div>
+        {%endif%}
+
   </div>
   </div>
         <div style="text-align:center">

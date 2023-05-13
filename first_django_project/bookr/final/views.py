@@ -20,6 +20,28 @@ import os
 def index(request):
     return render(request, "home.html")
 
+def change(request):
+    username = request.user.username
+    reservations = Reservation.objects.filter(Username=username)
+    reservation_list = []
+    for reservation in reservations:
+        title = get_object_or_404(Restaurant, title = reservation.Res_name)
+        logo = title.logo.url
+        reservation_list.append({'logo' : logo,'reservation': reservation})
+
+    if request.method == 'POST':
+        Img_path = request.POST.get("photo")
+        Photo.objects.filter(username=username).delete()
+        Img_path = "ava/" + Img_path
+        ava = Photo.objects.create(username = username, avatar=Img_path)
+        ava.save()
+        return redirect(profile)
+
+    ava = get_object_or_404(Photo,username=username)
+    photo = ava.avatar
+
+    return render(request, 'profile.html', {'reservation_list': reservation_list, "photo": photo, "change": "change"})
+
 
 @login_required
 def profile(request):
@@ -74,6 +96,7 @@ def reservation(request):
         messages.success(request, "Your table in \"{}\" was successfully reserved.".format(Res_name))
 
     return render(request, 'reservation.html', {"restaurants": restaurants})
+
 
 
 def login(request):
