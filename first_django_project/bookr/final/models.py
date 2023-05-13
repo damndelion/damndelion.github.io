@@ -33,3 +33,7 @@ class Menu(models.Model):
     price = models.IntegerField(help_text="Price of item")
     restaurant_id = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     img = models.ImageField(upload_to="menu_img")
+
+class Photo(models.Model):
+    avatar = models.ImageField(upload_to="ava/",default="ava/profile-icon-design-free-vector_1.png")
+    username = models.CharField(max_length=70)

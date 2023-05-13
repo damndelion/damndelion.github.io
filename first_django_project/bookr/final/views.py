@@ -3,7 +3,7 @@ from django.core.mail import send_mail
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, BadHeaderError, HttpResponseRedirect
 from django.contrib import messages
-from .models import Restaurant, Reservation, Menu
+from .models import Restaurant, Reservation, Menu, Photo
 
 from .forms import NewUserForm
 
@@ -22,7 +22,9 @@ def profile(request):
         logo = title.logo.url
         reservation_list.append({'logo' : logo,'reservation': reservation})
 
-    return render(request, 'profile.html', {'reservation_list': reservation_list})
+    photo = get_object_or_404(Photo,username=username)
+    ava = photo.avatar
+    return render(request, 'profile.html', {'reservation_list': reservation_list, 'photo':ava})
 
 
 @login_required
