@@ -1,11 +1,7 @@
 from django.contrib import admin
 
-<<<<<<< HEAD
 from .models import Reservation, Restaurant, Menu , home
-
-=======
 from .models import Reservation, Restaurant, Menu, Photo
->>>>>>> 2f34bbd370707c94f26a085815fd2900099f3aab
 
 class PhotoAdmin(admin.ModelAdmin):
     list_display = ('username', 'avatar')

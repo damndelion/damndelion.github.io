@@ -3,7 +3,6 @@ from django.core.mail import send_mail
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, BadHeaderError, HttpResponseRedirect
 from django.contrib import messages
-<<<<<<< HEAD
 from PIL import Image
 from .models import Restaurant, Reservation, Menu, home
 from .utils import average_rating
@@ -11,9 +10,7 @@ from .forms import NewUserForm
 from django.conf import settings
 from django.utils import timezone
 from django.conf import settings
-=======
 from .models import Restaurant, Reservation, Menu, Photo
->>>>>>> 2f34bbd370707c94f26a085815fd2900099f3aab
 
 from .forms import NewUserForm
 
@@ -138,7 +135,6 @@ def ItemSearchView(request, id):
 def restaurant_detail(request, id):
     restaurant = get_object_or_404(Restaurant, id=id)
     menu = Menu.objects.filter(restaurant_id=id)
-<<<<<<< HEAD
 
     return render(request, "restaurant_detail.html", {"title": title, "description": description,
                                                       "logo": logo, "img1": img1, "img2": img2, "img3": img3,
@@ -207,6 +203,4 @@ def home_res(request):
         #                                      "vip_zone" : vip_zone, "chef" : chef, "about_img" : about_img, "map_res" : map_res})
         #     return render(request, 'home.html', {'homes_list' :homes_list})
 
-=======
     return render(request, "restaurant_detail.html", {"restaurant": restaurant, "menus": menu, "id": id})
->>>>>>> 2f34bbd370707c94f26a085815fd2900099f3aab
