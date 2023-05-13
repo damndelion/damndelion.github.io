@@ -83,7 +83,7 @@ def register(request):
         form = NewUserForm(request.POST)
         if form.is_valid():
             username = request.POST.get('username')
-            user = form.save()
+            user = form.save()  
             new = Photo.objects.create(username = username)
             new.save()
             messages.success(request, "Registration successful.")
