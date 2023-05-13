@@ -8,6 +8,7 @@ from PIL import Image
 from .models import Restaurant, Reservation, Menu
 from .utils import average_rating
 from .forms import NewUserForm
+from django.conf import settings
 from django.utils import timezone
 from django.conf import settings
 
@@ -121,18 +122,21 @@ def restaurant_detail(request, id):
 def email(request):
     if request.method == "POST":
         subject = "RESERVATION"
-        message = "Name: {name}," \
-                  "Phone number: {phone}" \
-                  "Date: {date}" \
-                  "Time: {time}" \
-                  "Number of guests: {num}" \
-                  "Comment: {comment}".format(name=request.POST.get('name'), phone=request.POST.get('phone'),
+        message = "Name: {name},\n" \
+                  "Phone number: {phone}\n" \
+                  "Date: {date}\n" \
+                  "Time: {time}\n" \
+                  "Number of guests: {num}\n" \
+                  "Comment: {comment}\n"\
+                  "from Klassy reservation system".format(name=request.POST.get('name'), phone=request.POST.get('phone'),
                                               date=request.POST.get('date'), time=request.POST.get('time'),
                                               num=request.POST.get('number'), comment=request.POST.get('message'))
         from_email = "210103468@stu.sdu.edu.kz"
         if subject and message and from_email:
             try:
-                send_mail(subject, message, from_email, ["daniarermakhan003@gmail.com"])
+                send_mail(subject, message, 'settings.EMAIL_HOST_USER', ["210103468@stu.sdu.edu.kz"], fail_silently=False)
+                message = "Your reservation was sent successfully\n" + message
+                send_mail(subject, message, 'settings.EMAIL_HOST_USER', ["210103468@stu.sdu.edu.kz"], fail_silently=False)
             except BadHeaderError:
                 return HttpResponse("Invalid header found.")
             return HttpResponseRedirect("/")
