@@ -93,7 +93,29 @@ def reservation(request):
                                                  Message=Message)
 
         reservation.save()
-        messages.success(request, "Your table in \"{}\" was successfully reserved.".format(Res_name))
+
+        subject = "RESERVATION"
+        message = "Name: {name},\n" \
+                  "Phone number: {phone}\n" \
+                  "Date: {date}\n" \
+                  "Time: {time}\n" \
+                  "Number of guests: {num}\n" \
+                  "Comment: {comment}\n" \
+                  "from Klassy reservation system".format(name=Name, phone=Phone_num,date=Date, time=Time,num=Number,
+                                                          comment=Message)
+
+        if subject and message:
+
+            try:
+                send_mail(subject, message, 'settings.EMAIL_HOST_USER', ["210103468@stu.sdu.edu.kz"],
+                          fail_silently=False)
+                message = "Your reservation was sent successfully\n" + message
+                send_mail(subject, message, 'settings.EMAIL_HOST_USER', ["210103468@stu.sdu.edu.kz"],
+                          fail_silently=False)
+            except BadHeaderError:
+                return HttpResponse("Invalid header found.")
+            messages.success(request, "Your table  was successfully reserved.")
+            return HttpResponseRedirect("/reservation")
 
     return render(request, 'reservation.html', {"restaurants": restaurants})
 
@@ -108,7 +130,7 @@ def register(request):
         form = NewUserForm(request.POST)
         if form.is_valid():
             username = request.POST.get('username')
-            user = form.save()
+            user = form.save()  
             new = Photo.objects.create(username = username)
             new.save()
             messages.success(request, "Registration successful.")
@@ -150,63 +172,9 @@ def restaurant_detail(request, id):
                                                       "menus": menu, "id": id})
 
 
-def email(request):
-    if request.method == "POST":
-        subject = "RESERVATION"
-        message = "Name: {name},\n" \
-                  "Phone number: {phone}\n" \
-                  "Date: {date}\n" \
-                  "Time: {time}\n" \
-                  "Number of guests: {num}\n" \
-                  "Comment: {comment}\n" \
-                  "from Klassy reservation system".format(name=request.POST.get('name'),
-                                                          phone=request.POST.get('phone'),
-                                                          date=request.POST.get('date'), time=request.POST.get('time'),
-                                                          num=request.POST.get('number'),
-                                                          comment=request.POST.get('message'))
-
-        if subject and message:
-            try:
-                send_mail(subject, message, 'settings.EMAIL_HOST_USER', ["210103468@stu.sdu.edu.kz"],
-                          fail_silently=False)
-                message = "Your reservation was sent successfully\n" + message
-                send_mail(subject, message, 'settings.EMAIL_HOST_USER', ["210103468@stu.sdu.edu.kz"],
-                          fail_silently=False)
-            except BadHeaderError:
-                return HttpResponse("Invalid header found.")
-            messages.success(request, "Your table  was successfully reserved.")
-            return HttpResponseRedirect("/reservation")
-    return render(request, "reservation.html")
+# def email(request):
+#     if request.method == "POST":
+#
+#     return render(request, "reservation.html")
 
 
-# def home_res(request):
-    # homes = home.objects.all()
-    # home_list = []
-    # for homess in homes:
-    #     home_list.append({'homess' :homess})
-    # return render(request, 'home.html' , {'home_list': home_list} )
-
-
-
-    # if request.metho
-    # name_res = request.POST.get('name_res')
-    # img_res = request.POST.get('img_res')
-    # number_res = request.POST.get('number_res')
-    # address_res = request.POST.get('address_res')
-    # about_res = request.POST.get('about_res')
-    # avg_check = request.POST.get('avg_check')
-    # kitchen = request.POST.get('kitchen')
-    # work_time = request.POST.get('work_time')
-    # seats = request.POST.get('seats')
-    # vip_zone = request.POST.get('vip_zone')
-    # chef = request.POST.get('chef')
-    # about_img = request.POST.get('about_img')
-    # map_res = request.POST.get('map_res')
-        # homes_list = []
-        # for homess in homesis:
-        #     homes_list.append({'homess' : homess})
-        # return render(request, "home.html", {"name_res": name_res, "img_res": img_res,"number_res" : number_res,
-        #                                      "address_res" : address_res, "about_res" : about_res, "avg_check" : avg_check,
-        #                                      "kitchen" : kitchen, "work_time" : work_time, "seats" : seats,
-        #                                      "vip_zone" : vip_zone, "chef" : chef, "about_img" : about_img, "map_res" : map_res})
-        #     return render(request, 'home.html', {'homes_list' :homes_list})
