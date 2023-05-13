@@ -27,7 +27,10 @@ def profile(request):
     reservations = Reservation.objects.filter(Username=username)
     reservation_list = []
     for reservation in reservations:
-        reservation_list.append({'reservation': reservation})
+        title = get_object_or_404(Restaurant, title = reservation.Res_name)
+        logo = title.logo.url
+        reservation_list.append({'logo' : logo,'reservation': reservation})
+
     return render(request, 'profile.html', {'reservation_list': reservation_list})
 
 

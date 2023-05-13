@@ -1,25 +1,59 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<link rel="stylesheet" href="{% static 'profile.css' %}">
-<link rel="stylesheet" href="{% static 'profile.css' %}">
-<h2 class="h-2">My Profile:</h2>
-<div class="allnews">
-    <img src="{% static 'images/profile.png' %}" alt="" class="img">
+<style>
+    .right{
+        margin:auto;
+        width: 300px;
+    }
+    .all{
 
-  <div class="container">
+        margin-top: 100px;
+        margin-bottom: 120px;
+        padding-left: 50px;
+        padding-right: 50px;
+
+    }
+    .container2{
+    border: 2px solid black;
+    display: flex;
+    flex-wrap: wrap;
+    width: 500px;
+    overflow: auto;
+    font-weight: 600;
+    overflow-y: scroll;
+    height: 400px;
+    }
+    .logo{
+            width: 70%;
+        height: 90%;
+    }
+</style>
+<div class="all">
+    <h2 style="margin-bottom: 50px;font-size: 40px; font-weight: 800;">My Profile:</h2>
+    <div style="display:flex;justify-content: space-around;">
+        <div>
+    <img src="{% static 'images/profile.png' %}" alt="" style="width: 250px" >
+  <div class="container1">
       <h4 class="title">Username: <span>{{ request.user.username }}</span> </h4>
       <h4 class="title">Date Joined: <span>{{ request.user.date_joined }} </span></h4>
       <h4 class="title">Email: <span>{{ request.user.email }}</span></h4>
       <h4 class="title">Last Login: <span>{{ request.user.last_login }}</span></h4>
   </div>
-    <h1 class="h-2">Reservations</h1>
-    <div class="container-2">
+  </div>
+    <div class="container2">
+<!--        <h1>Reservations</h1>-->
         {%for item in reservation_list%}
+        <div style="display: flex;height: 200px">
+        <img src={{item.logo}} class="logo" >
+        <div class = "right">
         <p>Name: <span>{{item.reservation.Name}}</span></p>
         <p>Date: <span>{{item.reservation.Date}}</span></p>
         <p>Date: <span>{{item.reservation.Res_name}}</span></p>
+        </div>
+        </div>
         {%endfor%}
+    </div>
     </div>
   </div>
 
