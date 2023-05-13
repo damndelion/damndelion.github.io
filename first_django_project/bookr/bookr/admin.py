@@ -1,5 +1,9 @@
 from django.contrib import admin
+from final.models import home
 
+@admin.register(home)
+class ContactAdmin(admin.ModelAdmin):
+    pass
 
 
 
