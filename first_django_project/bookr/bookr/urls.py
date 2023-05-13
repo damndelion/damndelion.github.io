@@ -32,7 +32,7 @@ urlpatterns = [
     path('register/', final.views.register, name="register"),
     path('admin/', admin.site.urls),
     path('restaurant/<int:id>/', final.views.restaurant_detail, name='restaurant_detail'),
-    path('send-email', final.views.email)
+    # path('send-email', final.views.email)
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,20 +1,11 @@
 from django.contrib.auth.decorators import user_passes_test, login_required
-from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, BadHeaderError, HttpResponseRedirect
 from django.contrib import messages
-from PIL import Image
 from .models import Restaurant, Reservation, Menu
-from .utils import average_rating
-from .forms import NewUserForm
-from django.conf import settings
-from django.utils import timezone
-from django.conf import settings
 
-from io import BytesIO
-from django.core.files.images import ImageFile
-import os
+from .forms import NewUserForm
 
 
 def index(request):
@@ -66,7 +57,31 @@ def reservation(request):
                                                  Message=Message)
 
         reservation.save()
-        messages.success(request, "Your table in \"{}\" was successfully reserved.".format(Res_name))
+
+
+        subject = "RESERVATION"
+        message = "Name: {name},\n" \
+                  "Phone number: {phone}\n" \
+                  "Date: {date}\n" \
+                  "Time: {time}\n" \
+                  "Number of guests: {num}\n" \
+                  "Comment: {comment}\n" \
+                  "from Klassy reservation system".format(name=request.POST.get('name'),
+                                                          phone=request.POST.get('phone'),
+                                                          date=request.POST.get('date'), time=request.POST.get('time'),
+                                                          num=request.POST.get('number'),
+                                                          comment=request.POST.get('message'))
+
+        if subject and message:
+            try:
+                send_mail(subject, message, 'settings.EMAIL_HOST_USER', ["210103468@stu.sdu.edu.kz"],
+                          fail_silently=False)
+                message = "Your reservation was sent successfully\n" + message
+                send_mail(subject, message, 'settings.EMAIL_HOST_USER', ["210103468@stu.sdu.edu.kz"],
+                          fail_silently=False)
+            except BadHeaderError:
+                return HttpResponse("Invalid header found.")
+            messages.success(request, "Your table  was successfully reserved.")
 
     return render(request, 'reservation.html', {"restaurants": restaurants})
 
@@ -118,31 +133,3 @@ def restaurant_detail(request, id):
                                                       "logo": logo, "img1": img1, "img2": img2, "img3": img3,
                                                       "menus": menu, "id": id})
 
-
-def email(request):
-    if request.method == "POST":
-        subject = "RESERVATION"
-        message = "Name: {name},\n" \
-                  "Phone number: {phone}\n" \
-                  "Date: {date}\n" \
-                  "Time: {time}\n" \
-                  "Number of guests: {num}\n" \
-                  "Comment: {comment}\n" \
-                  "from Klassy reservation system".format(name=request.POST.get('name'),
-                                                          phone=request.POST.get('phone'),
-                                                          date=request.POST.get('date'), time=request.POST.get('time'),
-                                                          num=request.POST.get('number'),
-                                                          comment=request.POST.get('message'))
-
-        if subject and message:
-            try:
-                send_mail(subject, message, 'settings.EMAIL_HOST_USER', ["210103468@stu.sdu.edu.kz"],
-                          fail_silently=False)
-                message = "Your reservation was sent successfully\n" + message
-                send_mail(subject, message, 'settings.EMAIL_HOST_USER', ["210103468@stu.sdu.edu.kz"],
-                          fail_silently=False)
-            except BadHeaderError:
-                return HttpResponse("Invalid header found.")
-            messages.success(request, "Your table  was successfully reserved.")
-            return HttpResponseRedirect("/reservation")
-    return render(request, "reservation.html")
