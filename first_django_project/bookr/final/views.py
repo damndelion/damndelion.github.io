@@ -33,7 +33,6 @@ def change(request):
     if request.method == 'POST':
         Img_path = request.POST.get("photo")
         Photo.objects.filter(username=username).delete()
-        Img_path = "ava/" + Img_path
         ava = Photo.objects.create(username=username, avatar=Img_path)
         ava.save()
         return redirect(profile)
@@ -58,6 +57,26 @@ def profile(request):
     photo = ava.avatar
     return render(request, 'profile.html', {'reservation_list': reservation_list, "photo": photo})
 
+def products(request, id):
+    restaurant = Menu.objects.get(id=id)
+    recently_viewed_products = None
+    if 'recently_viewed' in request.session:
+        if id in request.session['recently_viewed']:
+            request.session['recently_viewed'].remove(id)
+
+        restaurants = Menu.objects.filter(id__in=request.session['recently_viewed'])
+        recently_viewed_products = sorted(products,
+                                          key=lambda x: request.session['recently_viewed'].index(x.id)
+                                          )
+        request.session['recently_viewed'].insert(0,id)
+
+        if len(request.session['recently_viewed']) > 4:
+            request.session['recently_viewed'].pop()
+    else:
+        request.session['recently_viewed'] = [id]
+
+    request.session.modified = True
+    return render(request,'products.html',{'product':product, 'recently_viewed_products':recently_viewed_products})
 
 @login_required
 def reservation(request):
