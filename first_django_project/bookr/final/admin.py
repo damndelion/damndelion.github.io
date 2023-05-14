@@ -5,6 +5,8 @@ from .models import Reservation, Restaurant, Menu, Photo
 
 class PhotoAdmin(admin.ModelAdmin):
     list_display = ('username', 'avatar')
+
+    
 class ReservationAdmin(admin.ModelAdmin):
     list_display = ('Name', 'Date')
 

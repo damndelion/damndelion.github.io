@@ -18,7 +18,11 @@ import os
 
 
 def index(request):
-    return render(request, "home.html")
+    homes = home.objects.filter()
+    home_list = []
+    for homess in homes:
+        home_list.append({'homess' : homess})
+    return render(request, "home.html", {'home' : home_list})
 
 
 def change(request):
