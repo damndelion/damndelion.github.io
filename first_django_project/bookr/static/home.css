@@ -51,10 +51,6 @@
     background-color: rgb(255, 255, 255);
     color: rgb(0, 0, 0);
 }
-.good a:hover{
-    background-color: #fcb900;
-    color: #fcb900;
-}
 .info2{
     display: flex;
 }
