@@ -37,18 +37,18 @@ class Menu(models.Model):
 
 class home(models.Model):
     name_res = models.CharField(max_length=50, help_text="restaurant name")
-    img_res = models.ImageField(upload_to='home_img')
+    img_res = models.CharField(max_length=1000)
     number_res = PhoneNumberField()
     address_res = models.CharField(max_length=70, help_text='res address')
-    about_res = models.CharField(max_length=255, help_text='res about')
+    about_res = models.CharField(max_length=10000, help_text='res about')
     avg_check = models.IntegerField(help_text='avg')
     kitchen = models.CharField(max_length=70, help_text='cook')
     work_time = models.CharField(max_length=70)
     seats = models.IntegerField(help_text='seats')
     vip_zone = models.CharField(max_length=50)
     chef = models.CharField(max_length=50)
-    about_img = models.ImageField(upload_to='home_img')
-    map_res = models.CharField(max_length=255)
+    about_img = models.CharField(max_length=1000)
+    map_res = models.CharField(max_length=1000)
     
 class Photo(models.Model):
     avatar = models.ImageField(upload_to="ava/",default="ava/profile-icon-design-free-vector_1.png")
