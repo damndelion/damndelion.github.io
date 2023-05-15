@@ -36,15 +36,12 @@ def change(request):
 
     if request.method == 'POST':
         Img_path = request.POST.get("photo")
-        Photo.objects.filter(username=username).delete()
         Img_path = "ava/" + Img_path
-        ava = Photo.objects.create(username=username, avatar=Img_path)
-        ava.save()
-        return redirect(profile)
+        ava = Photo.objects.filter(username=username).update(avatar=Img_path)
+        change = ""
 
     ava = get_object_or_404(Photo, username=username)
     photo = ava.avatar
-
     return render(request, 'profile.html', {'reservation_list': reservation_list, "photo": photo, "change": "change"})
 
 
@@ -156,3 +153,4 @@ def restaurant_detail(request, id):
     restaurant = get_object_or_404(Restaurant, id=id)
     menu = Menu.objects.filter(restaurant_id=id)
     return render(request, "restaurant_detail.html", {"restaurant": restaurant, "menus": menu, "id": id})
+

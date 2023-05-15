@@ -29,7 +29,7 @@ urlpatterns = [
     path('accounts/profile/change', final.views.change, name='change'),
     path('accounts/logout/', final.views.profile, name='profile'),
     path('', final.views.index),
-    path('reservation/', final.views.reservation),
+    path('reservation/', final.views.reservation, name='reservation'),
     path('register/', final.views.register, name="register"),
     path('admin/', admin.site.urls),
     path('restaurant/<int:id>/', final.views.restaurant_detail, name='restaurant_detail'),
