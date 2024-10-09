@@ -37,7 +37,7 @@
 
 </style>
 
-<div id="content-main" style="background-image: url('/static/images/loginbg.jpg');">
+<div id="content-main" style="background-color: white">
   <form action="{% url 'accounts:login' %}" method="post" id="login-form">{% csrf_token %}
     {% if form.errors and not form.non_field_errors %}
       <p class="errornote">

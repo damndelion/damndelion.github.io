@@ -1,10 +1,14 @@
+from typing import final
+
 from django.contrib import admin
 from django.conf import settings
+from django.contrib.auth import logout
 from django.urls import path, include
 from django.conf.urls.static import static
 
 
-import final.views
+from final.views import *
+
 
 
 # urlpatterns = [
@@ -24,15 +28,15 @@ import final.views
 # ]
 urlpatterns = [
     path('accounts/', include(('django.contrib.auth.urls', 'auth'), namespace='accounts')),
-    path('restaurant/<int:id>/search', final.views.ItemSearchView, name='search_items'),
-    path('accounts/profile/', final.views.profile, name='profile'),
-    path('accounts/profile/change', final.views.change, name='change'),
-    path('accounts/logout/', final.views.profile, name='profile'),
-    path('', final.views.index),
-    path('reservation/', final.views.reservation, name='reservation'),
-    path('register/', final.views.register, name="register"),
+    path('restaurant/<int:id>/search', ItemSearchView, name='search_items'),
+    path('accounts/profile/', profile, name='profile'),
+    path('accounts/profile/change', change, name='change'),
+    path('accounts/logout/', logout_view, name='logout'),
+    path('', index),
+    path('reservation/', reservation, name='reservation'),
+    path('register/', register, name="register"),
     path('admin/', admin.site.urls),
-    path('restaurant/<int:id>/', final.views.restaurant_detail, name='restaurant_detail'),
+    path('restaurant/<int:id>/', restaurant_detail, name='restaurant_detail'),
     # path('send-email', final.views.email)
 ]
 if settings.DEBUG:

@@ -11,6 +11,9 @@ from .forms import NewUserForm
 from django.conf import settings
 from django.utils import timezone
 from django.conf import settings
+from django.shortcuts import redirect
+from django.contrib.auth import logout
+from django.urls import reverse
 
 from io import BytesIO
 from django.core.files.images import ImageFile
@@ -57,6 +60,8 @@ def profile(request):
 
     ava = get_object_or_404(Photo, username=username)
     photo = ava.avatar
+    if not photo:
+        photo = ''
     return render(request, 'profile.html', {'reservation_list': reservation_list, "photo": photo})
 
 
@@ -148,6 +153,10 @@ def ItemSearchView(request, id):
         return render(request, "restaurant_detail.html", {"restaurant": restaurant,
                                                           "menus": menu, 'id': id, 'search': search})
 
+
+def logout_view(request):
+    logout(request)
+    return redirect(reverse('login'))
 
 def restaurant_detail(request, id):
     restaurant = get_object_or_404(Restaurant, id=id)
