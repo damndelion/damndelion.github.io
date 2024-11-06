@@ -35,6 +35,9 @@ class Menu(models.Model):
     restaurant_id = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     img = models.ImageField(upload_to="menu_img")
 
+class Basket(models.Model):
+    
+
 class home(models.Model):
     name_res = models.CharField(max_length=50, help_text="restaurant name")
     img_res = models.CharField(max_length=1000)

@@ -14,7 +14,7 @@ from django.conf import settings
 from django.shortcuts import redirect
 from django.contrib.auth import logout
 from django.urls import reverse
-
+from django.conf import settings
 from io import BytesIO
 from django.core.files.images import ImageFile
 import os
@@ -66,6 +66,13 @@ def profile(request):
 
 
 @login_required
+def add_to_basket(request, menu_id):
+    menu_item = Menu.objects.get(id=menu_id)
+    basket, created = Basket.objects.get_or_create(user=request.user)
+    basket.items.add(menu_item)  # Adjust this line based on how you store items in the basket
+    return redirect('basket')
+
+@login_required
 def reservation(request):
     restaurants = Restaurant.objects.all()
     if request.method == 'POST':
@@ -113,10 +120,10 @@ def reservation(request):
 
         if subject and message:
             try:
-                send_mail(subject, message, 'settings.EMAIL_HOST_USER', ["210103468@stu.sdu.edu.kz"],
+                send_mail(subject, message, settings.EMAIL_HOST_USER, [Email],
                           fail_silently=False)
                 message = "Your reservation was sent successfully\n" + message
-                send_mail(subject, message, 'settings.EMAIL_HOST_USER', ["210103468@stu.sdu.edu.kz"],
+                send_mail(subject, message, settings.EMAIL_HOST_USER, [Email],
                           fail_silently=False)
             except BadHeaderError:
                 return HttpResponse("Invalid header found.")
