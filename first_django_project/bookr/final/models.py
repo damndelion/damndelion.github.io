@@ -3,6 +3,7 @@ from django.contrib import auth
 from django.db import migrations, models
 from PIL import Image
 from phonenumber_field.modelfields import PhoneNumberField
+from django.contrib.auth.models import User
 
 
 class Reservation(models.Model):
@@ -36,7 +37,10 @@ class Menu(models.Model):
     img = models.ImageField(upload_to="menu_img")
 
 class Basket(models.Model):
-    
+    Username = models.CharField(help_text="Username", max_length=40)
+    items = models.JSONField(default=dict)
+
+
 
 class home(models.Model):
     name_res = models.CharField(max_length=50, help_text="restaurant name")

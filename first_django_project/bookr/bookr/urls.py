@@ -26,6 +26,7 @@ from final.views import *
 #     path('books/<int:book_pk>/final/<int:review_pk>/', views.review_edit, name='review_edit'),
 #     path('books/<int:pk>/media/', views.book_media, name='book_media')
 # ]
+# urls.py
 urlpatterns = [
     path('accounts/', include(('django.contrib.auth.urls', 'auth'), namespace='accounts')),
     path('restaurant/<int:id>/search', ItemSearchView, name='search_items'),
@@ -33,11 +34,12 @@ urlpatterns = [
     path('accounts/profile/change', change, name='change'),
     path('accounts/logout/', logout_view, name='logout'),
     path('', index),
+    path('restaurant/<int:restaurant_id>/<int:menu_id>/', restaurant_detail, name='restaurant_detail_menu'),
     path('reservation/', reservation, name='reservation'),
     path('register/', register, name="register"),
     path('admin/', admin.site.urls),
-    path('restaurant/<int:id>/', restaurant_detail, name='restaurant_detail'),
-    # path('send-email', final.views.email)
+    path('restaurant/<int:id>/', restaurant_detail, name='restaurant_detail'),  # Handles only restaurant_id
 ]
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

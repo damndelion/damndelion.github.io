@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Reservation, Restaurant, Menu , home
+from .models import Reservation, Restaurant, Menu , home, Basket
 from .models import Reservation, Restaurant, Menu, Photo
 
 class PhotoAdmin(admin.ModelAdmin):
@@ -20,6 +20,9 @@ class homeAdmin(admin.ModelAdmin):
 class ReservationAdmin(admin.ModelAdmin):
     list_display = ('Name', 'Date')
 
+
+
+
 admin.site.register(Reservation, ReservationAdmin)
 
 
@@ -28,3 +31,4 @@ admin.site.register(Photo, PhotoAdmin)
 admin.site.register(Restaurant, RestaurantAdmin)
 admin.site.register(Menu, MenuAdmin)
 admin.site.register(home, homeAdmin)
+admin.site.register(Basket)

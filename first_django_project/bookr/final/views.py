@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, BadHeaderError, HttpResponseRedirect
 from django.contrib import messages
 from PIL import Image
-from .models import Restaurant, Reservation, Menu, home, Photo
+from .models import Restaurant, Reservation, Menu, home, Photo, Basket
 from .utils import average_rating
 from .forms import NewUserForm
 from django.conf import settings
@@ -15,6 +15,7 @@ from django.shortcuts import redirect
 from django.contrib.auth import logout
 from django.urls import reverse
 from django.conf import settings
+
 from io import BytesIO
 from django.core.files.images import ImageFile
 import os
@@ -52,6 +53,7 @@ def change(request):
 def profile(request):
     username = request.user.username
     reservations = Reservation.objects.filter(Username=username)
+    basket = Basket.objects.filter(Username=username).first()
     reservation_list = []
     for reservation in reservations:
         title = get_object_or_404(Restaurant, title=reservation.Res_name)
@@ -62,15 +64,22 @@ def profile(request):
     photo = ava.avatar
     if not photo:
         photo = ''
-    return render(request, 'profile.html', {'reservation_list': reservation_list, "photo": photo})
+
+    basket_items = basket.items if basket else {}
+    menu_items = []
+    if basket_items:
+        for item_id, quantity in basket_items.items():
+            menu_item = get_object_or_404(Menu, id=item_id)  # Get the menu item by ID
+            menu_items.append({
+                'name': menu_item.name,
+                'price': menu_item.price,
+                'img_url': menu_item.img.url,  # Get the image URL
+                'quantity': quantity,
+            })
+    return render(request, 'profile.html', {'reservation_list': reservation_list, "photo": photo, 'menu_items': menu_items})
 
 
-@login_required
-def add_to_basket(request, menu_id):
-    menu_item = Menu.objects.get(id=menu_id)
-    basket, created = Basket.objects.get_or_create(user=request.user)
-    basket.items.add(menu_item)  # Adjust this line based on how you store items in the basket
-    return redirect('basket')
+
 
 @login_required
 def reservation(request):
@@ -165,8 +174,36 @@ def logout_view(request):
     logout(request)
     return redirect(reverse('login'))
 
-def restaurant_detail(request, id):
-    restaurant = get_object_or_404(Restaurant, id=id)
-    menu = Menu.objects.filter(restaurant_id=id)
-    return render(request, "restaurant_detail.html", {"restaurant": restaurant, "menus": menu, "id": id})
+# views.py
+def restaurant_detail(request, restaurant_id, menu_id=None):
+    restaurant = get_object_or_404(Restaurant, id=restaurant_id)  # Ensure the restaurant exists
+    menu = Menu.objects.filter(restaurant_id=restaurant_id)  # Get all menu items for this restaurant
 
+    if request.method == "POST":
+        # Get the menu item that was selected
+        item_id = menu_id
+        quantity = int(request.POST.get('quantity', 1))
+        user = request.user
+
+        # Get or create the basket for the current user
+        basket, created = Basket.objects.get_or_create(Username=user.username)
+
+        # Initialize the items dictionary if it's empty
+        items = basket.items if basket.items else {}
+
+        # Update items in the basket
+        if item_id in items:
+            items[item_id] += quantity  # Increment quantity if already in basket
+        else:
+            items[item_id] = quantity  # Add new item with quantity
+
+        # Save the updated items in the basket
+        basket.items = items
+        basket.save()
+
+    return render(request, "restaurant_detail.html", {
+        "restaurant": restaurant,
+        "menus": menu,
+        "id": restaurant_id,
+        "menu_id": menu_id,
+    })

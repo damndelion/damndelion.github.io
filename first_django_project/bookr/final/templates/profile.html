@@ -2,112 +2,212 @@
 {% load static %}
 {% block content %}
 <style>
-    body{
-    color:white;
+    body {
+        color: white;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
     }
-    .all{
-        padding-top: 120px;
-        padding-bottom: 120px;
-        padding-left: 50px;
-        padding-right: 50px;
-            background: url('/static/images/reservation-bg.jpg');
 
+    .all {
+        padding: 120px 50px;
+        background: url('/static/images/reservation-bg.jpg') no-repeat center center fixed;
+        background-size: cover;
+        min-height: 100vh;
+    }
 
+    h2 {
+        margin-bottom: 50px;
+        font-size: 40px;
+        font-weight: 800;
+        text-align: center;
     }
-.container2::-webkit-scrollbar {
-      width: 0;
-      height: 0;
-}
-.change{
-padding: 10px;
-    background-color: #fb5849;
-    width: 150px;
-    text-align: center;
-    border-radius: 7px;
-}
-    .container2{
-    color: black;
-    overflow: auto;
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    border: 2px solid black;
-    display: flex;
-    flex-wrap: wrap;
-    width: 500px;
-    overflow: auto;
-    font-weight: 600;
-    overflow-y: scroll;
-    height: 380px;
-    padding-left: 25px;
-    background-color: white;
-    border-radius: 10px;
+
+    .container1 {
+        background: rgba(0, 0, 0, 0.5);
+        padding: 20px;
+        border-radius: 10px;
+        max-width: 500px;
+        margin-right: 30px;
     }
-    .logo{
-            width: 230px;
+
+    .container2 {
+        color: black;
+        border: 2px solid black;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        font-weight: 600;
+        overflow-y: auto;
+        height: 380px;
+        padding: 15px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .logo {
+        width: 230px;
         height: 200px;
+        border-radius: 10px;
     }
-    .right{
-        width:200px;
-        margin: auto;
+
+    .right {
+        margin-left: 20px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
-    .title{
-        margin: 10px;
+
+    .right p {
+        margin: 5px 0;
+        font-size: 16px;
+    }
+
+    .title {
+        margin: 10px 0;
         font-size: 21px;
+        color: #fb5849;
     }
-    .photo{
+
+    .change {
+        padding: 10px;
+        background-color: #fb5849;
+        width: 150px;
+        text-align: center;
+        border-radius: 7px;
+        margin-top: 20px;
+    }
+
+    .change a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .photo {
         padding: 8px 1px;
-    border-radius: 10px;
-    padding-left: 10px;
-    margin-top: 10px;
-    display:block;
+        border-radius: 10px;
+        margin-top: 10px;
+        display: block;
+        width: 100%;
     }
-    .sb{
-        padding: 5px 15px;
-    background-color: #fb5849;
-    border: 2px solid #fb5849;
-    color: white;
-    margin-left: 10px;
-    border-radius: 10px;
+
+    .sb {
+        padding: 10px 15px;
+        background-color: #fb5849;
+        border: 2px solid #fb5849;
+        color: white;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    .sb:hover {
+        background-color: #e94c3f;
+    }
+
+    .reservation-item, .menu-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        background-color: #f8f8f8;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .reservation-item img, .menu-item img {
+        width: 150px;
+        height: 150px;
+        border-radius: 10px;
+    }
+
+    .reservation-item .right, .menu-item .right {
+        margin-left: 20px;
+        flex-grow: 1;
+    }
+
+    .reservation-item .right p, .menu-item .right p {
+        margin: 5px 0;
+        font-size: 16px;
+    }
+
+    @media (max-width: 768px) {
+        .container2 {
+            max-width: 100%;
+        }
+
+        .container1 {
+            max-width: 100%;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+        }
     }
 </style>
-<div class="all">
-    <h2 style="margin-bottom: 50px;font-size: 40px; font-weight: 800;">My Profile:</h2>
-    <div style="display:flex;justify-content: space-around;">
-        <div style="display:flex">
-    <img src='{{photo.url}}'  alt="#" style="width: 300px; margin-right: 30px;" >
-  <div class="container1">
-      <h4 class="title">Username: <span>{{ request.user.username }}</span> </h4>
-      <h4 class="title">Date Joined: <span>{{ request.user.date_joined }} </span></h4>
-      <h4 class="title">Email: <span>{{ request.user.email }}</span></h4>
-      <h4 class="title">Last Login: <span>{{ request.user.last_login }}</span></h4>
-      {% if change%}
-      <form method="POST" >
-          {% csrf_token %}
-          <input required type="file" class = "photo" name = "photo"  placeholder="Choose photo">
-          <input type="submit" class="sb" value="Submit">
-      </form>
-      {%else%}
-      <div class="change"><a href="{% url 'change' %}" style="text-decoration:none;color:white;">Change photo</a></div>
-        {%endif%}
 
-  </div>
-  </div>
-        <div style="text-align:center">
-            <h1 style="margin-bottom: 10px">Reservations</h1>
+<div class="all">
+    <h2>My Profile:</h2>
+    <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+        <div style="display: flex;">
+            <img src="{{ photo.url }}" alt="User Avatar" style="width: 200px; height: 200px; border-radius: 10px; margin-right: 30px;">
+            <div class="container1">
+                <h4 class="title">Username: <span>{{ request.user.username }}</span></h4>
+                <h4 class="title">Date Joined: <span>{{ request.user.date_joined }}</span></h4>
+                <h4 class="title">Email: <span>{{ request.user.email }}</span></h4>
+                <h4 class="title">Last Login: <span>{{ request.user.last_login }}</span></h4>
+
+                {% if change %}
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input required type="file" class="photo" name="photo">
+                        <input type="submit" class="sb" value="Submit">
+                    </form>
+                {% else %}
+                    <div class="change">
+                        <a href="{% url 'change' %}">Change photo</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div style="text-align: center; flex-grow: 1;">
+            <h1 style="margin-bottom: 20px;">Reservations</h1>
             <div class="container2">
-        {%for item in reservation_list%}
-        <div style="display: flex;height: 200px">
-        <img src={{item.logo}} class="logo" >
-        <div class = "right">
-        <p>Name: <span>{{item.reservation.Name}}</span></p>
-        <p>Date: <span>{{item.reservation.Date}}</span></p>
-        <p>Restaurant: <span>{{item.reservation.Res_name}}</span></p>
+                {% for item in reservation_list %}
+                    <div class="reservation-item">
+                        <img src="{{ item.logo }}" alt="Restaurant Logo">
+                        <div class="right">
+                            <p>Name: <span>{{ item.reservation.Name }}</span></p>
+                            <p>Date: <span>{{ item.reservation.Date }}</span></p>
+                            <p>Restaurant: <span>{{ item.reservation.Res_name }}</span></p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
-        </div>
-        {%endfor%}
     </div>
+
+    <div style="text-align: center; margin-top: 40px;">
+        <h1>Your Basket</h1>
+        <div class="container2">
+            {% for item in menu_items %}
+                <div class="menu-item">
+                    <img src="{{ item.img_url }}" alt="Menu Item">
+                    <div class="right">
+                        <p>Name: <span>{{ item.name }}</span></p>
+                        <p>Price: $<span>{{ item.price }}</span></p>
+                        <p>Quantity: <span>{{ item.quantity }}</span></p>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
-  </div>
+</div>
 
 {% endblock %}
