@@ -31,6 +31,8 @@ urlpatterns = [
     path('accounts/', include(('django.contrib.auth.urls', 'auth'), namespace='accounts')),
     path('restaurant/<int:id>/search', ItemSearchView, name='search_items'),
     path('accounts/profile/', profile, name='profile'),
+    path('accounts/profile/delete/<int:res_id>', delete, name='delete' ),
+    path('accounts/profile/delete_item/<int:item_id>', delete_item, name='delete_item' ),
     path('accounts/profile/change', change, name='change'),
     path('accounts/logout/', logout_view, name='logout'),
     path('', index),
@@ -38,7 +40,9 @@ urlpatterns = [
     path('reservation/', reservation, name='reservation'),
     path('register/', register, name="register"),
     path('admin/', admin.site.urls),
-    path('restaurant/<int:id>/', restaurant_detail, name='restaurant_detail'),  # Handles only restaurant_id
+    path('restaurant/<int:restaurant_id>/', restaurant_detail, name='restaurant_detail'),
+    path('profile/checkout-session/', create_checkout_session, name='create_checkout_session'),
+    path('profile/success/', payment_success, name='payment_success'),
 ]
 
 if settings.DEBUG:

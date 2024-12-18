@@ -9,12 +9,14 @@ from .models import Restaurant, Reservation, Menu, home, Photo, Basket
 from .utils import average_rating
 from .forms import NewUserForm
 from django.conf import settings
+import stripe
 from django.utils import timezone
 from django.conf import settings
 from django.shortcuts import redirect
 from django.contrib.auth import logout
 from django.urls import reverse
 from django.conf import settings
+from django.http import JsonResponse
 
 from io import BytesIO
 from django.core.files.images import ImageFile
@@ -29,29 +31,11 @@ def index(request):
     return render(request, "home.html", {'home' : home_list})
 
 
+@login_required
 def change(request):
     username = request.user.username
-    reservations = Reservation.objects.filter(Username=username)
-    reservation_list = []
-    for reservation in reservations:
-        title = get_object_or_404(Restaurant, title=reservation.Res_name)
-        logo = title.logo.url
-        reservation_list.append({'logo': logo, 'reservation': reservation})
 
-    if request.method == 'POST':
-        Img_path = request.POST.get("photo")
-        Img_path = "ava/" + Img_path
-        ava = Photo.objects.filter(username=username).update(avatar=Img_path)
-        change = ""
-
-    ava = get_object_or_404(Photo, username=username)
-    photo = ava.avatar
-    return render(request, 'profile.html', {'reservation_list': reservation_list, "photo": photo, "change": "change"})
-
-
-@login_required
-def profile(request):
-    username = request.user.username
+    # Retrieve reservations for the user
     reservations = Reservation.objects.filter(Username=username)
     basket = Basket.objects.filter(Username=username).first()
     reservation_list = []
@@ -60,11 +44,8 @@ def profile(request):
         logo = title.logo.url
         reservation_list.append({'logo': logo, 'reservation': reservation})
 
-    ava = get_object_or_404(Photo, username=username)
-    photo = ava.avatar
-    if not photo:
-        photo = ''
-
+    # Fetch or create user's photo instance
+    photo_instance, created = Photo.objects.get_or_create(username=username)
     basket_items = basket.items if basket else {}
     menu_items = []
     if basket_items:
@@ -75,10 +56,129 @@ def profile(request):
                 'price': menu_item.price,
                 'img_url': menu_item.img.url,  # Get the image URL
                 'quantity': quantity,
+                'id': item_id,
             })
-    return render(request, 'profile.html', {'reservation_list': reservation_list, "photo": photo, 'menu_items': menu_items})
+    if request.method == 'POST':
+        if 'photo' in request.FILES:  # Ensure a file has been uploaded
+            photo_instance.avatar = request.FILES['photo']
+            photo_instance.save()
+            return redirect('profile')  # Redirect to the same page to display updated image
+
+    return render(request, 'profile.html', {
+        'reservation_list': reservation_list,
+        "photo": photo_instance.avatar,
+        'menu_items': menu_items,
+        "change": "change" if request.method != "POST" else "",
+    })
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
+@login_required
+def profile(request):
+    username = request.user.username
+    reservations = Reservation.objects.filter(Username=username)
+    basket = Basket.objects.filter(Username=username).first()
+    reservation_list = []
+
+    # Fetch reservation details
+    for reservation in reservations:
+        title = get_object_or_404(Restaurant, title=reservation.Res_name)
+        logo = title.logo.url
+        reservation_list.append({'logo': logo, 'reservation': reservation})
+
+    # Fetch profile photo
+    ava = get_object_or_404(Photo, username=username)
+    photo = ava.avatar
+    if not photo:
+        photo = ''
+
+    # Process basket items
+    basket_items = basket.items if basket else {}
+    menu_items = []
+    total_price = 0  # Initialize total price
+    if basket_items:
+        for item_id, quantity in basket_items.items():
+            menu_item = get_object_or_404(Menu, id=item_id)
+            item_price = menu_item.price * quantity
+            total_price += item_price
+            menu_items.append({
+                'name': menu_item.name,
+                'price': menu_item.price,
+                'img_url': menu_item.img.url,
+                'quantity': quantity,
+                'id': item_id,
+            })
+
+    return render(request, 'profile.html', {
+        'reservation_list': reservation_list,
+        'photo': photo,
+        'menu_items': menu_items,
+        'total_price': total_price,
+        'stripe_public_key': settings.STRIPE_PUBLIC_KEY
+    })
+
+@login_required
+def create_checkout_session(request):
+    username = request.user.username
+    basket = Basket.objects.filter(Username=username, is_paid=False).first()
+    if not basket:
+        return JsonResponse({'error': 'Basket is empty or already paid'}, status=400)
+
+    # Prepare line items for Stripe checkout
+    line_items = []
+    for item_id, quantity in basket.items.items():
+        menu_item = get_object_or_404(Menu, id=item_id)
+        line_items.append({
+            'price_data': {
+                'currency': 'usd',
+                'product_data': {
+                    'name': menu_item.name,
+                },
+                'unit_amount': menu_item.price * 100,  # Amount in cents
+            },
+            'quantity': quantity,
+        })
+
+    # Create Stripe checkout session
+    session = stripe.checkout.Session.create(
+        payment_method_types=['card'],
+        line_items=line_items,
+        mode='payment',
+        success_url=request.build_absolute_uri('/profile/success'),
+        cancel_url=request.build_absolute_uri('/profile'),
+    )
+
+    return JsonResponse({'id': session.id})
+
+@login_required
+def payment_success(request):
+    username = request.user.username
+    basket = Basket.objects.filter(Username=username, is_paid=False).first()
+    if basket:
+        basket.is_paid = True
+        basket.save()
+
+    return render(request, 'payment_success.html')
 
 
+def delete(request, res_id: int):
+    Reservation.objects.filter(id=res_id).delete()
+    return redirect('profile')
+
+
+def delete_item(request, item_id: int):
+    username = request.user.username
+    basket = Basket.objects.filter(Username=username).first()
+
+    items = basket.items
+    print(items)
+    del items[str(item_id)]
+    print(items)
+
+    basket.items = items
+    basket.save()
+
+    return redirect('profile')
 
 
 @login_required
@@ -152,7 +252,7 @@ def register(request):
         if form.is_valid():
             username = request.POST.get('username')
             user = form.save()
-            new = Photo.objects.create(username=username)
+            new = Photo.objects.create(avatar='ava/profile-icon-design-free-vector_1.png',username=username)
             new.save()
             messages.success(request, "Registration successful.")
             return redirect("/accounts/profile/")
@@ -175,7 +275,7 @@ def logout_view(request):
     return redirect(reverse('login'))
 
 # views.py
-def restaurant_detail(request, restaurant_id, menu_id=None):
+def restaurant_detail(request,restaurant_id, menu_id=None):
     restaurant = get_object_or_404(Restaurant, id=restaurant_id)  # Ensure the restaurant exists
     menu = Menu.objects.filter(restaurant_id=restaurant_id)  # Get all menu items for this restaurant
 

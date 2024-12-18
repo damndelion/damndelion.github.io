@@ -39,6 +39,13 @@ class Menu(models.Model):
 class Basket(models.Model):
     Username = models.CharField(help_text="Username", max_length=40)
     items = models.JSONField(default=dict)
+    is_paid = models.BooleanField(default=False, help_text="Payment status")
+
+    # def total_price(self):
+    #     total_price = 0
+    #     for i in self.items:
+    #         total_price = i.quantity
+
 
 
 
@@ -58,5 +65,5 @@ class home(models.Model):
     map_res = models.CharField(max_length=1000)
     
 class Photo(models.Model):
-    avatar = models.ImageField(upload_to="ava/",default="ava/profile-icon-design-free-vector_1.png")
+    avatar = models.ImageField(upload_to="ava/",default="ava/profile-icon-design-free-vector_1.png", blank = True)
     username = models.CharField(max_length=70)

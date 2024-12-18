@@ -2,212 +2,239 @@
 {% load static %}
 {% block content %}
 <style>
+    /* Global Styles */
     body {
-        color: white;
-        font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
-    }
-
-    .all {
-        padding: 120px 50px;
+        font-family: 'Poppins', sans-serif;
+        color: #333;
         background: url('/static/images/reservation-bg.jpg') no-repeat center center fixed;
         background-size: cover;
-        min-height: 100vh;
     }
 
-    h2 {
-        margin-bottom: 50px;
-        font-size: 40px;
-        font-weight: 800;
+    .container {
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 30px;
+        background-color: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        border-radius: 12px;
+    }
+
+    h1, h2 {
         text-align: center;
-    }
-
-    .container1 {
-        background: rgba(0, 0, 0, 0.5);
-        padding: 20px;
-        border-radius: 10px;
-        max-width: 500px;
-        margin-right: 30px;
-    }
-
-    .container2 {
-        color: black;
-        border: 2px solid black;
-        display: flex;
-        flex-direction: column;
-        width: 100%;
+        color: #fb5849;
+        margin-bottom: 20px;
         font-weight: 600;
-        overflow-y: auto;
-        height: 380px;
-        padding: 15px;
-        background-color: white;
-        border-radius: 10px;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        font-size: 32px;
     }
 
-    .logo {
-        width: 230px;
-        height: 200px;
-        border-radius: 10px;
+    .section {
+        margin-top: 100px;
+        margin-bottom: 40px;
     }
 
-    .right {
-        margin-left: 20px;
-        flex-grow: 1;
+    .section-title {
+        font-size: 26px;
+        color: #555;
+        margin-bottom: 15px;
+        font-weight: 500;
+    }
+
+    .content-box {
+        padding: 25px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+    }
+
+    .cards-container {
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        gap: 20px;
     }
 
-    .right p {
+    .content-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .content-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .content-item img {
+        width: 90px;
+        height: 90px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-right: 20px;
+    }
+
+    .content-details {
+        flex: 1;
+    }
+
+    .content-details p {
         margin: 5px 0;
         font-size: 16px;
+        color: #333;
     }
 
-    .title {
+    .action-btn {
+        padding: 12px 18px;
+        background-color: #fb5849;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .action-btn:hover {
+        background-color: #e94c3f;
+        transform: scale(1.05);
+    }
+
+    .user-profile {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .user-profile img {
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 20px;
+        border: 4px solid #fb5849;
+    }
+
+    .user-details p {
         margin: 10px 0;
-        font-size: 21px;
+        font-size: 16px;
+        font-weight: 500;
+        color: #333;
+    }
+
+    .user-details p strong {
         color: #fb5849;
     }
 
-    .change {
-        padding: 10px;
-        background-color: #fb5849;
-        width: 150px;
+    .scroll-container {
+        max-height: 500px;
+        overflow-y: auto;
+    }
+
+    .basket {
         text-align: center;
-        border-radius: 7px;
+    }
+
+    .basket h3 {
+        font-size: 22px;
+        color: #333;
+        font-weight: 600;
         margin-top: 20px;
-    }
-
-    .change a {
-        color: white;
-        text-decoration: none;
-        font-weight: bold;
-    }
-
-    .photo {
-        padding: 8px 1px;
-        border-radius: 10px;
-        margin-top: 10px;
-        display: block;
-        width: 100%;
-    }
-
-    .sb {
-        padding: 10px 15px;
-        background-color: #fb5849;
-        border: 2px solid #fb5849;
-        color: white;
-        border-radius: 10px;
-        cursor: pointer;
-        margin-top: 10px;
-        transition: background-color 0.3s ease;
-    }
-
-    .sb:hover {
-        background-color: #e94c3f;
-    }
-
-    .reservation-item, .menu-item {
-        display: flex;
-        align-items: center;
-        margin-bottom: 20px;
-        background-color: #f8f8f8;
-        padding: 10px;
-        border-radius: 10px;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .reservation-item img, .menu-item img {
-        width: 150px;
-        height: 150px;
-        border-radius: 10px;
-    }
-
-    .reservation-item .right, .menu-item .right {
-        margin-left: 20px;
-        flex-grow: 1;
-    }
-
-    .reservation-item .right p, .menu-item .right p {
-        margin: 5px 0;
-        font-size: 16px;
-    }
-
-    @media (max-width: 768px) {
-        .container2 {
-            max-width: 100%;
-        }
-
-        .container1 {
-            max-width: 100%;
-        }
-
-        .logo {
-            width: 100px;
-            height: 100px;
-        }
     }
 </style>
 
-<div class="all">
-    <h2>My Profile:</h2>
-    <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
-        <div style="display: flex;">
-            <img src="{{ photo.url }}" alt="User Avatar" style="width: 200px; height: 200px; border-radius: 10px; margin-right: 30px;">
-            <div class="container1">
-                <h4 class="title">Username: <span>{{ request.user.username }}</span></h4>
-                <h4 class="title">Date Joined: <span>{{ request.user.date_joined }}</span></h4>
-                <h4 class="title">Email: <span>{{ request.user.email }}</span></h4>
-                <h4 class="title">Last Login: <span>{{ request.user.last_login }}</span></h4>
-
-                {% if change %}
-                    <form method="POST" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <input required type="file" class="photo" name="photo">
-                        <input type="submit" class="sb" value="Submit">
-                    </form>
-                {% else %}
-                    <div class="change">
-                        <a href="{% url 'change' %}">Change photo</a>
-                    </div>
-                {% endif %}
+<div class="container">
+    <!-- User Profile Section -->
+    <div class="section">
+        <div class="user-profile">
+            <img src="{{ photo.url }}" alt="User Photo">
+            <div class="user-details">
+                <p><strong>Username:</strong> {{ request.user.username }}</p>
+                <p><strong>Date Joined:</strong> {{ request.user.date_joined }}</p>
+                <p><strong>Email:</strong> {{ request.user.email }}</p>
+                <p><strong>Last Login:</strong> {{ request.user.last_login }}</p>
             </div>
-        </div>
-
-        <div style="text-align: center; flex-grow: 1;">
-            <h1 style="margin-bottom: 20px;">Reservations</h1>
-            <div class="container2">
-                {% for item in reservation_list %}
-                    <div class="reservation-item">
-                        <img src="{{ item.logo }}" alt="Restaurant Logo">
-                        <div class="right">
-                            <p>Name: <span>{{ item.reservation.Name }}</span></p>
-                            <p>Date: <span>{{ item.reservation.Date }}</span></p>
-                            <p>Restaurant: <span>{{ item.reservation.Res_name }}</span></p>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
+            {% if change %}
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input required type="file" name="photo">
+                    <button type="submit" class="action-btn">Upload Photo</button>
+                </form>
+            {% else %}
+                <a href="{% url 'change' %}" class="action-btn">Change Photo</a>
+            {% endif %}
         </div>
     </div>
 
-    <div style="text-align: center; margin-top: 40px;">
-        <h1>Your Basket</h1>
-        <div class="container2">
-            {% for item in menu_items %}
-                <div class="menu-item">
-                    <img src="{{ item.img_url }}" alt="Menu Item">
-                    <div class="right">
-                        <p>Name: <span>{{ item.name }}</span></p>
-                        <p>Price: $<span>{{ item.price }}</span></p>
-                        <p>Quantity: <span>{{ item.quantity }}</span></p>
-                    </div>
+    <!-- Reservations Section -->
+    <h2 class="section-title">Reservations</h2>
+    <div class="scroll-container">
+        <div class="cards-container" id="reservations">
+            {% for item in reservation_list %}
+            <div class="content-item">
+                <img src="{{ item.logo }}" alt="{{ item.reservation.Res_name }}">
+                <div class="content-details">
+                    <p><strong>Name:</strong> {{ item.reservation.Name }}</p>
+                    <p><strong>Date:</strong> {{ item.reservation.Date }}</p>
+                    <p><strong>Restaurant:</strong> {{ item.reservation.Res_name }}</p>
                 </div>
+                <a href="{% url 'delete' item.reservation.id %}" class="action-btn">Delete</a>
+            </div>
+            {% empty %}
+                <p>No reservations available.</p>
             {% endfor %}
         </div>
     </div>
-</div>
 
+    <!-- Basket Section -->
+    <h2 class="section-title">Your Basket</h2>
+    <div class="scroll-container">
+        <div class="cards-container" id="basket">
+            {% for item in menu_items %}
+            <div class="content-item">
+                <img src="{{ item.img_url }}" alt="{{ item.name }}">
+                <div class="content-details">
+                    <p><strong>Name:</strong> {{ item.name }}</p>
+                    <p><strong>Price:</strong> ${{ item.price }}</p>
+                    <p><strong>Quantity:</strong> {{ item.quantity }}</p>
+                </div>
+                <a href="{% url 'delete_item' item.id%}" class="action-btn">Delete</a>
+            </div>
+            {% empty %}
+                <p>Your basket is empty.</p>
+            {% endfor %}
+
+        </div>
+    </div>
+
+    <h3 class="basket">Total Price: ${{ total_price }}</h3>
+{% if total_price > 0 %}
+    <button id="pay-button" class="action-btn">Pay Now</button>
+{% endif %}
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    const stripe = Stripe("{{ stripe_public_key }}");
+    const payButton = document.getElementById('pay-button');
+    payButton.addEventListener('click', () => {
+        fetch("{% url 'create_checkout_session' %}", {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.id) {
+                stripe.redirectToCheckout({ sessionId: data.id });
+            } else {
+                alert('Failed to create checkout session.');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+</script>
+</div>
 {% endblock %}
