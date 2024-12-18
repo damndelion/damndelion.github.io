@@ -3,6 +3,51 @@
 {% load static %}
 
     <style>
+.comments-section {
+    margin-top: 30px;
+    padding: 20px;
+    border-top: 1px solid #ddd;
+}
+.comments-section h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+.comments-section ul {
+    list-style: none;
+    padding: 0;
+}
+.comments-section li {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+.comments-section strong {
+    font-size: 16px;
+}
+.comments-section span {
+    font-size: 12px;
+    color: #666;
+    margin-left: 10px;
+}
+.comments-section textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.comments-section button {
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #fb5849;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.comments-section button:hover {
+    background-color: #e04a40;
+}
 
         .inp{
             border: 1px solid #d9dcde;
@@ -97,6 +142,33 @@
             </ul>
         </div>
     </div>
+<div class="comments-section">
+    <h2>Comments</h2>
+    {% if comments %}
+        <ul>
+            {% for comment in comments %}
+                <li>
+                    <strong>{{ comment.user.username }}</strong>
+                    <span>{{ comment.timestamp|date:"M d, Y H:i" }}</span>
+                    <p>{{ comment.content }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No comments yet. Be the first to comment!</p>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+    <form method="POST" action="">
+        {% csrf_token %}
+        <textarea name="content" rows="3" placeholder="Write your comment here..." required></textarea>
+        <button type="submit">Post Comment</button>
+    </form>
+    {% else %}
+    <p><a href="{% url 'login' %}">Log in</a> to post a comment.</p>
+    {% endif %}
+</div>
+
 
 {%endif%}
 

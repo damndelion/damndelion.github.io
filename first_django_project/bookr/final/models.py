@@ -67,3 +67,13 @@ class home(models.Model):
 class Photo(models.Model):
     avatar = models.ImageField(upload_to="ava/",default="ava/profile-icon-design-free-vector_1.png", blank = True)
     username = models.CharField(max_length=70)
+
+# models.py
+class Comment(models.Model):
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name="comments")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField(help_text="Comment text")
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Comment by {self.user.username} on {self.restaurant.title}"

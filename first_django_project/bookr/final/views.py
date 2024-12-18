@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, BadHeaderError, HttpResponseRedirect
 from django.contrib import messages
 from PIL import Image
-from .models import Restaurant, Reservation, Menu, home, Photo, Basket
+from .models import Restaurant, Reservation, Menu, home, Photo, Basket, Comment
 from .utils import average_rating
 from .forms import NewUserForm
 from django.conf import settings
@@ -275,35 +275,33 @@ def logout_view(request):
     return redirect(reverse('login'))
 
 # views.py
-def restaurant_detail(request,restaurant_id, menu_id=None):
-    restaurant = get_object_or_404(Restaurant, id=restaurant_id)  # Ensure the restaurant exists
-    menu = Menu.objects.filter(restaurant_id=restaurant_id)  # Get all menu items for this restaurant
+def restaurant_detail(request, restaurant_id, menu_id=None):
+    restaurant = get_object_or_404(Restaurant, id=restaurant_id)
+    menu = Menu.objects.filter(restaurant_id=restaurant_id)
+    comments = restaurant.comments.all().order_by('-timestamp')  # Fetch comments for this restaurant
 
     if request.method == "POST":
-        # Get the menu item that was selected
-        item_id = menu_id
-        quantity = int(request.POST.get('quantity', 1))
-        user = request.user
-
-        # Get or create the basket for the current user
-        basket, created = Basket.objects.get_or_create(Username=user.username)
-
-        # Initialize the items dictionary if it's empty
-        items = basket.items if basket.items else {}
-
-        # Update items in the basket
-        if item_id in items:
-            items[item_id] += quantity  # Increment quantity if already in basket
-        else:
-            items[item_id] = quantity  # Add new item with quantity
-
-        # Save the updated items in the basket
-        basket.items = items
-        basket.save()
+        if "content" in request.POST:  # Check if a comment is being submitted
+            content = request.POST.get("content")
+            if content.strip():
+                Comment.objects.create(restaurant=restaurant, user=request.user, content=content)
+        else:  # Handle adding items to the basket
+            item_id = menu_id
+            quantity = int(request.POST.get('quantity', 1))
+            user = request.user
+            basket, created = Basket.objects.get_or_create(Username=user.username)
+            items = basket.items if basket.items else {}
+            if item_id in items:
+                items[item_id] += quantity
+            else:
+                items[item_id] = quantity
+            basket.items = items
+            basket.save()
 
     return render(request, "restaurant_detail.html", {
         "restaurant": restaurant,
         "menus": menu,
+        "comments": comments,
         "id": restaurant_id,
         "menu_id": menu_id,
     })
